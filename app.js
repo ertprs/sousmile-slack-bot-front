@@ -9,6 +9,7 @@ const axios = require('axios');
 const app = new App({
   // token: process.env.SLACK_BOT_TOKEN,
   // signingSecret: process.env.SLACK_SIGNING_SECRET
+  
   token: 'xoxb-405218432613-1467840145619-aADCIv7Gs3SkCCUYX4EjtZEu',
   signingSecret: 'a451024b17f98232d1f9c2351490d91b'
   

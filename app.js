@@ -15,12 +15,12 @@ const app = new App({
 
 
 app.view('techops', async ({ payload, ack, context }) => {
-  ack();
+  await ack();
   console.log('techops view submission');
 });
 
 app.shortcut('open_techops',  async ({ payload, ack, context }) => {
-  ack();
+  await ack();
 
   try {
     // Call the views.open method using the built-in WebClient

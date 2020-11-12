@@ -1,16 +1,17 @@
 // Require the Bolt package (github.com/slackapi/bolt)
 const { App } = require("@slack/bolt");
 
-// const messages = require('./messages');
+
 // const welcome = require('./welcome');
+const messages = require('./messages');
 const http = require('http');
 const axios = require('axios');
 
 const app = new App({
-  // token: process.env.SLACK_BOT_TOKEN,
-  // signingSecret: process.env.SLACK_SIGNING_SECRET
-  token: 'xoxb-405218432613-1467840145619-gflJUCcJReCJ4htQhWjXJHvG',
-  signingSecret: 'a451024b17f98232d1f9c2351490d91b'
+  token: process.env.SLACK_BOT_TOKEN,
+  signingSecret: process.env.SLACK_SIGNING_SECRET
+  // token: 'xoxb-405218432613-1467840145619-gflJUCcJReCJ4htQhWjXJHvG',
+  // signingSecret: 'a451024b17f98232d1f9c2351490d91b'
 });
 
 

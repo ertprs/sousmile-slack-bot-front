@@ -12,11 +12,11 @@ function translateStatus(status) {
 }
 
 function translatePriority(priority) {
-  let translated = ":arrow_up:";
+  let translated = "alta :warning:";
   if (priority == 'MEDIUM') {
-    translated = ":left_right_arrow:";
+    translated = "média :left_right_arrow: ";
   } else if (priority == 'LOW') {
-    translated = ":arrow_down:";
+    translated = "baixa :arrow_down:";
   }
   
   return translated;
@@ -176,7 +176,11 @@ module.exports = {
         viewBlock.divider(),
         viewBlock.section("\n\n\t\n"),
         atribuitionSection,
-        viewBlock.context(">cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + "> \n> solicitante: @" + item['slack_user_name'] + " " + priority + "\n> \n> *Observações:* \n> " + description)
+        viewBlock.context(">cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + ">" + 
+          "\n> solicitante: @" + item['slack_user_name'] + 
+          "\n> prioridade: " + priority + 
+          "\n> data: 20/12/2020 10:30:30" + 
+          "\n> \n> *Observações:* \n> " + description)
       );
     });
     

@@ -137,12 +137,8 @@ module.exports = {
   techopsList: async function(app, token, triggerId, payload, viewId = undefined) { 
     let blocks = []
     
-    let statusFilter = translateStatus(payload['status_to_filter']);
-    if (payload.length > 0) {
-      statusFilter = translateStatus(payload.find(i => i['status'] != undefined)['status']);
-    }
-    
-    let sectionText = " *" + payload.length + "* techops com o status de: *" + statusFilter + "*";
+    let priorityToFilter = translatePriority(payload['priority_to_filter']);
+    let sectionText = " *" + payload.length + "* techops com a prioridade: *" + priorityToFilter + "*";
     blocks = blocks.concat(viewBlock.sectionWithSelect(sectionText, 'techops.list.view.piority.filter.change'));
     
     payload.forEach(item => {
@@ -178,8 +174,9 @@ module.exports = {
         atribuitionSection,
         viewBlock.context(">cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + ">" + 
           "\n> data: 20/12/2020 10:30:30" + 
-          "\n> \n> solicitante: @" + item['slack_user_name'] + 
+          "\n>\n> solicitante: @" + item['slack_user_name'] + 
           "\n> prioridade: " + priority + 
+          "\n> status: " + translateStatus(item['status']) + 
           "\n> \n> *Observações:* \n> " + description)
       );
     });

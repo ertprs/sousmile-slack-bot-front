@@ -47,7 +47,7 @@ module.exports = {
         "\n> \n> cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+payload['customer_info']+"|" + payload['customer_info'] + 
         "\n> solicitante: @" + payload['slack_user_name'] + 
         "\n> prioridade: " + priority + 
-        "\n> \n> *Observações:* \n " + description)
+        "\n> \n> *Observações:* \n\n " + description)
     );
     
     let messagePayload = {

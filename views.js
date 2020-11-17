@@ -176,7 +176,7 @@ module.exports = {
           "\n>\n> cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + ">" +   
           "\n> solicitante: @" + item['slack_user_name'] + 
           "\n> prioridade: " + priority + 
-          "\n>\n> *Observações:* \n" + description)
+          "\n>\n> *Observações:* \n\n" + description)
       );
     });
     

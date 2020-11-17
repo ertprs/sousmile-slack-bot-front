@@ -75,7 +75,7 @@ module.exports = {
     let finishButtonBlockId = finishButtonActionId + "." + payload['id'];
     let blocks = []
     
-    let section = viewBlock.sectionWithButton(responsibleText, 'finalizar.', finishButtonActionId, finishButtonBlockId);
+    let section = viewBlock.sectionWithButton(responsibleText, 'finalizar', finishButtonActionId, finishButtonBlockId);
     if (respond) {
       section = viewBlock.section(responsibleText);
     }

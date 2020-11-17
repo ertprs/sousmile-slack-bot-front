@@ -177,9 +177,9 @@ module.exports = {
         viewBlock.section("\n\n\t\n"),
         atribuitionSection,
         viewBlock.context(">cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + ">" + 
+          "\n> data: 20/12/2020 10:30:30" + 
           "\n> solicitante: @" + item['slack_user_name'] + 
           "\n> prioridade: " + priority + 
-          "\n> data: 20/12/2020 10:30:30" + 
           "\n> \n> *Observações:* \n> " + description)
       );
     });

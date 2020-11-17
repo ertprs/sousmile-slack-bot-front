@@ -189,7 +189,7 @@ module.exports = {
         "type": "modal",
         "title": {
           "type": "plain_text",
-          "text": "Lista de techops em aberto",
+          "text": "Techops em aberto",
           "emoji": true
         },
         "close": {

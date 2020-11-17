@@ -71,8 +71,8 @@ app.shortcut('techops.list.view.open',  async ({ payload, ack, context }) => {
   
   
   try {
-    const response = await api.listTechOpsByStatus('OPEN');
-    response['data']['status_to_filter'] = 'OPEN';
+    const response = await api.listTechOpsByPriority('HIGH');
+    response['data']['priority_to_filter'] = 'HIGH';
     const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
   } catch(error) {
     console.error(error);
@@ -80,15 +80,15 @@ app.shortcut('techops.list.view.open',  async ({ payload, ack, context }) => {
 });
 
 // altera o filtro de status da lista de techops
-app.action('techops.list.view.status.filter.change', async ({ ack, body, context, client }) => {
+app.action('techops.list.view.piority.filter.change', async ({ ack, body, context, client }) => {
   await ack();
   
   let viewId = body['view']['id'];
-  let statusToFilter = body['actions'][0]['selected_option']['value'];
+  let priorityToFilter = body['actions'][0]['selected_option']['value'];
   
   try {
-    const response = await api.listTechOpsByStatus(statusToFilter);
-    response['data']['status_to_filter'] = statusToFilter;
+    const response = await api.listTechOpsByPriority(priorityToFilter);
+    response['data']['priority_to_filter'] = priorityToFilter;
     const result = await views.techopsList(app, context.botToken, body['trigger_id'], response['data'], viewId);
   }catch(error) {
     console.error(error);

@@ -52,25 +52,25 @@ module.exports = {
             "text": {
               "type": "plain_text",
               "emoji": true,
-              "text": "Aberto"
+              "text": "Alta"
             },
-            "value": "OPEN"
+            "value": "HIGH"
           },
           {
             "text": {
               "type": "plain_text",
               "emoji": true,
-              "text": "Em andamento"
+              "text": "Média"
             },
-            "value": "SOLVING"
+            "value": "MEDIUM"
           },
           {
             "text": {
               "type": "plain_text",
               "emoji": true,
-              "text": "Finalizados"
+              "text": "Baixa"
             },
-            "value": "FINISHED"
+            "value": "LOW"
           }
         ]
       }

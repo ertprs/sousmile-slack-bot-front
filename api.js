@@ -15,8 +15,12 @@ module.exports = {
   //   return axios.get(process.env.API_URL + '/techops/open', requestHeader())
   // },
   
-  listTechOpsByStatus: async function(status) {
-    return axios.get(process.env.API_URL + '/techops-by-status?status=' + status, requestHeader())
+  // listTechOpsByStatus: async function(status) {
+  //   return axios.get(process.env.API_URL + '/techops-by-status?status=' + status, requestHeader())
+  // },
+
+  listTechOpsByPriority: async function(priority) {
+    return axios.get(process.env.API_URL + '/techops-by-priority?priority=' + priority, requestHeader())
   },
   
   moveToNextStatus: async function(id, payload) {

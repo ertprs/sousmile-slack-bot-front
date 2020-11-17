@@ -143,7 +143,7 @@ module.exports = {
     }
     
     let sectionText = " *" + payload.length + "* techops com o status de: *" + statusFilter + "*";
-    blocks = blocks.concat(viewBlock.sectionWithSelect(sectionText, 'techops.list.view.status.filter.change'));
+    blocks = blocks.concat(viewBlock.sectionWithSelect(sectionText, 'techops.list.view.piority.filter.change'));
     
     payload.forEach(item => {
       let status = translateStatus(item['status']); 
@@ -178,7 +178,7 @@ module.exports = {
         atribuitionSection,
         viewBlock.context(">cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + ">" + 
           "\n> data: 20/12/2020 10:30:30" + 
-          "\n> solicitante: @" + item['slack_user_name'] + 
+          "\n> \n> solicitante: @" + item['slack_user_name'] + 
           "\n> prioridade: " + priority + 
           "\n> \n> *Observações:* \n> " + description)
       );

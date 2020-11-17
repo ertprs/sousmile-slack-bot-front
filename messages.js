@@ -33,7 +33,7 @@ module.exports = {
     let atribuitionButtonActionId = "techops.message.assign.button";
     
     let atribuitionButtonBlockId = atribuitionButtonActionId + "." + payload['ops_id'];
-    let atribuitionSectionText = "## novo techops";
+    let atribuitionSectionText = "@ramonzito novo techops";
     let atribuitionButtonText = ":ballot_box_with_check: atribuir";
     let atribuitionSection = viewBlock.sectionWithButton(atribuitionSectionText, atribuitionButtonText, atribuitionButtonActionId, atribuitionButtonBlockId);  
     if (respond) {

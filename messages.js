@@ -14,11 +14,11 @@ function translateStatus(status) {
 }
 
 function translatePriority(priority) {
-  let translated = ":arrow_up:";
+  let translated = ":warning: alta";
   if (priority == 'MEDIUM') {
-    translated = ":left_right_arrow:";
+    translated = ":left_right_arrow: média";
   } else if (priority == 'LOW') {
-    translated = ":arrow_down:";
+    translated = ":arrow_down: baixa";
   }
   
   return translated;
@@ -33,7 +33,7 @@ module.exports = {
     let atribuitionButtonActionId = "techops.message.assign.button";
     
     let atribuitionButtonBlockId = atribuitionButtonActionId + "." + payload['ops_id'];
-    let atribuitionSectionText = "novo techops solicitado";
+    let atribuitionSectionText = "## novo techops";
     let atribuitionButtonText = ":ballot_box_with_check: atribuir";
     let atribuitionSection = viewBlock.sectionWithButton(atribuitionSectionText, atribuitionButtonText, atribuitionButtonActionId, atribuitionButtonBlockId);  
     if (respond) {
@@ -43,7 +43,10 @@ module.exports = {
     let blocks = []
     blocks = blocks.concat(  
       atribuitionSection,
-      viewBlock.context(">cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+payload['customer_info']+"|" + payload['customer_info'] + "> \n> solicitante: @" + payload['slack_user_name'] + " " + priority + "\n> \n> *Observações:* \n> " + description)
+      viewBlock.context(">cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+payload['customer_info']+"|" + payload['customer_info'] + 
+        "> \n> solicitante: @" + payload['slack_user_name'] + 
+        "> \n> prioridade: " + priority + 
+        "\n> \n> *Observações:* \n> " + description)
     );
     
     let messagePayload = {

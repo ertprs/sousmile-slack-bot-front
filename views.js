@@ -138,7 +138,7 @@ module.exports = {
     let blocks = []
     
     let priorityToFilter = translatePriority(payload['priority_to_filter']);
-    let sectionText = " *" + payload.length + "* techops com a prioridade: *" + priorityToFilter + "*";
+    let sectionText = " *" + payload.length + "* techops em aberto com prioridade: *" + priorityToFilter + "*";
     blocks = blocks.concat(viewBlock.sectionWithSelect(sectionText, 'techops.list.view.piority.filter.change'));
     
     payload.forEach(item => {
@@ -176,7 +176,6 @@ module.exports = {
           "\n>\n>cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + ">" +   
           "\n>solicitante: @" + item['slack_user_name'] + 
           "\n> prioridade: " + priority + 
-          "\n> status: " + translateStatus(item['status']) + 
           "\n>\n> *Observações:* \n> " + description)
       );
     });
@@ -190,7 +189,7 @@ module.exports = {
         "type": "modal",
         "title": {
           "type": "plain_text",
-          "text": "Lista de techops",
+          "text": "Lista de techops em aberto",
           "emoji": true
         },
         "close": {

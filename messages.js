@@ -14,11 +14,11 @@ function translateStatus(status) {
 }
 
 function translatePriority(priority) {
-  let translated = ":warning: alta";
+  let translated = "alta :warning:";
   if (priority == 'MEDIUM') {
-    translated = ":left_right_arrow: média";
+    translated = "média :left_right_arrow: ";
   } else if (priority == 'LOW') {
-    translated = ":arrow_down: baixa";
+    translated = "baixa :arrow_down:";
   }
   
   return translated;
@@ -45,7 +45,7 @@ module.exports = {
       atribuitionSection,
       viewBlock.context(">cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+payload['customer_info']+"|" + payload['customer_info'] + 
         "> \n> solicitante: @" + payload['slack_user_name'] + 
-        "> \n> prioridade: " + priority + 
+        "\n> prioridade: " + priority + 
         "\n> \n> *Observações:* \n> " + description)
     );
     

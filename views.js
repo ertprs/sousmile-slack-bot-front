@@ -144,7 +144,7 @@ module.exports = {
     payload.forEach(item => {
       let status = translateStatus(item['status']); 
       let priority = translatePriority(item['priority']);
-      let description = item['description'].replace("\n", "\n> ");
+      let description = item['description'];
       
       let responsibleText = '';
       if (item['techops_request_status']) {
@@ -173,10 +173,10 @@ module.exports = {
         viewBlock.section("\n\n\t\n"),
         atribuitionSection,
         viewBlock.context("> data: 20/12/2020 10:30:30" + 
-          "\n>\n>cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + ">" +   
-          "\n>solicitante: @" + item['slack_user_name'] + 
+          "\n>\n> cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + ">" +   
+          "\n> solicitante: @" + item['slack_user_name'] + 
           "\n> prioridade: " + priority + 
-          "\n>\n> *Observações:* \n> " + description)
+          "\n>\n> *Observações:* \n" + description)
       );
     });
     

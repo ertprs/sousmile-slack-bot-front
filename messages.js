@@ -29,7 +29,7 @@ module.exports = {
   techopsCreated: async function(app, token, payload, respond = undefined) {    
     let status = translateStatus(payload['status']); 
     let priority = translatePriority(payload['priority']);
-    let description = payload['description'].replace("\n", "\n> ");
+    let description = payload['description'];
     let atribuitionButtonActionId = "techops.message.assign.button";
     
     let atribuitionButtonBlockId = atribuitionButtonActionId + "." + payload['ops_id'];
@@ -43,8 +43,9 @@ module.exports = {
     let blocks = []
     blocks = blocks.concat(  
       atribuitionSection,
-      viewBlock.context(">cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+payload['customer_info']+"|" + payload['customer_info'] + 
-        "> \n> solicitante: @" + payload['slack_user_name'] + 
+      viewBlock.context("> data: 20/12/2020 10:30:30" + 
+        "\n> \n> cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+payload['customer_info']+"|" + payload['customer_info'] + 
+        "\n> solicitante: @" + payload['slack_user_name'] + 
         "\n> prioridade: " + priority + 
         "\n> \n> *Observações:* \n " + description)
     );

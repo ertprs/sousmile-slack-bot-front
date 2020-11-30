@@ -100,31 +100,30 @@ const ws = new WorkflowStep('techops_created', {
     const outputs = [
       {
         type: 'text',
-        name: 'slack_user_id',
-        label: 'Task slack_user_id',
-      },
-      {
-        type: 'text',
-        name: 'customer_info',
-        label: 'Task name',
-      },
-      {
-        type: 'text',
-        name: 'description',
-        label: 'Task description',
-      },
-      {
-        type: 'text',
-        name: 'priority',
-        label: 'Task priority',
+        name: 'techops_id',
+        label: 'techops id',
       }
     ];
 
     await update({ inputs, outputs });
   },
-  execute: async ({ step, complete, fail }) => {
+
+  execute: async ({ step, complete, fail, context }) => {
     const { inputs } = step;
 
+    let payload = {
+      customer_info: inputs.customer_info.value,
+      priority: 'HIGH',
+      description: inputs.description.value,
+      slack_user_id: 'UM26HGRL4',
+      slack_user_name: 'ramon.antunes'
+    }
+    
+    try {
+      let result = await messages.techopsCreated(app, context.botToken, payload);
+    } catch (error) {
+      console.error(error);
+    } 
 
     // let values = view['state']['values']
     // let customer = values['customer_info']['customer_info']['value']
@@ -135,6 +134,7 @@ const ws = new WorkflowStep('techops_created', {
     console.log(inputs)
     console.log('===========');
     const outputs = {
+      techops_id: 123,
       slack_user_id: inputs.slack_user_id.value,
       customer_info: inputs.customer_info.value,
       description: inputs.description.value,

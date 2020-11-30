@@ -120,7 +120,7 @@ const ws = new WorkflowStep('techops_created', {
     }
     
     try {
-      let result = await messages.techopsCreated(app, context.botToken, payload);
+      const response = await api.createTechOps(payload)
     } catch (error) {
       console.error(error);
     } 

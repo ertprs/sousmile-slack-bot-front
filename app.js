@@ -14,41 +14,89 @@ const app = new App({
 const ws = new WorkflowStep('techops_created', {
   edit: async ({ ack, step, configure }) => {
     await ack();
-
     const blocks = [
       {
-        type: 'input',
-        block_id: 'task_name_input',
-        element: {
-          type: 'plain_text_input',
-          action_id: 'name',
-          placeholder: {
-            type: 'plain_text',
-            text: 'Add a task name',
-          },
+        "type": "input",
+        "block_id": "customer_info",
+        "element": {
+          "type": "plain_text_input",
+          "action_id": "customer_info"
         },
-        label: {
-          type: 'plain_text',
-          text: 'Task name',
-        },
+        "label": {
+          "type": "plain_text",
+          "text": "Informe o nome, email ou case code do usuário",
+          "emoji": true
+        }
       },
       {
-        type: 'input',
-        block_id: 'task_description_input',
-        element: {
-          type: 'plain_text_input',
-          action_id: 'description',
-          placeholder: {
-            type: 'plain_text',
-            text: 'Add a task description',
+        "type": "input",
+        "block_id": "priority",
+        "label": {
+          "type": "plain_text",
+          "text": "Prioridade",
+          "emoji": true
+        },
+        "element": {
+          "type": "static_select",
+          "action_id": "priority",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Prioridade",
+            "emoji": true
           },
-        },
-        label: {
-          type: 'plain_text',
-          text: 'Task description',
-        },
+          "options": [
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Alta",
+                "emoji": true
+              },
+              "value": "HIGH"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Média",
+                "emoji": true
+              },
+              "value": "MEDIUM"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Baixa",
+                "emoji": true
+              },
+              "value": "LOW"
+            }
+          ]
+        }
       },
+      {
+        "type": "context",
+        "elements": [
+          {
+            "type": "mrkdwn",
+            "text": ":arrow_up: Alta  :arrow_left: Média  :arrow_down: Baixa"
+          }
+        ]
+      },
+      {
+        "type": "input",
+        "block_id": "description",
+        "label": {
+          "type": "plain_text",
+          "text": "Descreva o problema",
+          "emoji": true
+        },
+        "element": {
+          "type": "plain_text_input",
+          "action_id": "description",
+          "multiline": true
+        }
+      }
     ];
+    
     await configure({ blocks });
   },
   save: async ({ ack, step, update }) => {},

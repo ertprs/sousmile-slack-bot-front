@@ -49,13 +49,14 @@ const ws = new WorkflowStep('techops_created', {
   
   save: async ({ ack, step, view, update }) => {
     await ack();
-
+  
     const { values } = view.state;
-    const taskName = values.task_name_input.name;
+    console.log(values);
+    // const taskName = values.task_name_input.name;
     const taskDescription = values.task_description_input.description;
 
     const inputs = {
-      taskName: { value: taskName.value },
+      taskName: { value: 'TaskName' },
       taskDescription: { value: taskDescription.value }
     };
 

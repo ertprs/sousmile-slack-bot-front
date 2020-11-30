@@ -52,8 +52,8 @@ const ws = new WorkflowStep('techops_created', {
   
     const { values } = view.state;
     console.log(values);
-    const taskName = values.customer_info.customer_info.type;
-    const taskDescription = values.customer_info.description.type;
+    const taskName = values['customer_info']['customer_info']['type'];
+    const taskDescription = values['customer_info']['description']['type'];
     // const taskDescription = values.task_description_input.description;
 
     const inputs = {

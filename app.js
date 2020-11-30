@@ -47,7 +47,7 @@ const ws = new WorkflowStep('techops_created', {
     await configure({ blocks });
   },
   
-  save: async ({ ack, step, update }) => {
+  save: async ({ ack, step, view, update }) => {
     await ack();
 
     const { values } = view.state;

@@ -30,59 +30,6 @@ const ws = new WorkflowStep('techops_created', {
       },
       {
         "type": "input",
-        "block_id": "priority",
-        "label": {
-          "type": "plain_text",
-          "text": "Prioridade",
-          "emoji": true
-        },
-        "element": {
-          "type": "static_select",
-          "action_id": "priority",
-          "placeholder": {
-            "type": "plain_text",
-            "text": "Prioridade",
-            "emoji": true
-          },
-          "options": [
-            {
-              "text": {
-                "type": "plain_text",
-                "text": "Alta",
-                "emoji": true
-              },
-              "value": "HIGH"
-            },
-            {
-              "text": {
-                "type": "plain_text",
-                "text": "Média",
-                "emoji": true
-              },
-              "value": "MEDIUM"
-            },
-            {
-              "text": {
-                "type": "plain_text",
-                "text": "Baixa",
-                "emoji": true
-              },
-              "value": "LOW"
-            }
-          ]
-        }
-      },
-      {
-        "type": "context",
-        "elements": [
-          {
-            "type": "mrkdwn",
-            "text": ":arrow_up: Alta  :arrow_left: Média  :arrow_down: Baixa"
-          }
-        ]
-      },
-      {
-        "type": "input",
         "block_id": "description",
         "label": {
           "type": "plain_text",
@@ -96,10 +43,37 @@ const ws = new WorkflowStep('techops_created', {
         }
       }
     ];
-    
+
     await configure({ blocks });
   },
-  save: async ({ ack, step, update }) => {},
+  
+  save: async ({ ack, step, update }) => {
+    await ack();
+
+    const { values } = view.state;
+    const taskName = values.task_name_input.name;
+    const taskDescription = values.task_description_input.description;
+
+    const inputs = {
+      taskName: { value: taskName.value },
+      taskDescription: { value: taskDescription.value }
+    };
+
+    const outputs = [
+      {
+        type: 'text',
+        name: 'taskName',
+        label: 'Task name',
+      },
+      {
+        type: 'text',
+        name: 'taskDescription',
+        label: 'Task description',
+      }
+    ];
+
+    await update({ inputs, outputs });
+  },
   execute: async ({ step, complete, fail }) => {},
 
 })

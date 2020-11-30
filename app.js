@@ -11,48 +11,52 @@ const app = new App({
 });
 
 
-app.step('techops_created', async ({ ack, step, configure }) => {
-  await ack();
+const ws = new WorkflowStep('techops_created', {
+  edit: async ({ ack, step, configure }) => {
+    await ack();
 
-  const blocks = [
-    {
-      type: 'input',
-      block_id: 'task_name_input',
-      element: {
-        type: 'plain_text_input',
-        action_id: 'name',
-        placeholder: {
+    const blocks = [
+      {
+        type: 'input',
+        block_id: 'task_name_input',
+        element: {
+          type: 'plain_text_input',
+          action_id: 'name',
+          placeholder: {
+            type: 'plain_text',
+            text: 'Add a task name',
+          },
+        },
+        label: {
           type: 'plain_text',
-          text: 'Add a task name',
+          text: 'Task name',
         },
       },
-      label: {
-        type: 'plain_text',
-        text: 'Task name',
-      },
-    },
-    {
-      type: 'input',
-      block_id: 'task_description_input',
-      element: {
-        type: 'plain_text_input',
-        action_id: 'description',
-        placeholder: {
+      {
+        type: 'input',
+        block_id: 'task_description_input',
+        element: {
+          type: 'plain_text_input',
+          action_id: 'description',
+          placeholder: {
+            type: 'plain_text',
+            text: 'Add a task description',
+          },
+        },
+        label: {
           type: 'plain_text',
-          text: 'Add a task description',
+          text: 'Task description',
         },
       },
-      label: {
-        type: 'plain_text',
-        text: 'Task description',
-      },
-    },
-  ];
+    ];
+    await configure({ blocks });
+  },
+  save: async ({ ack, step, update }) => {},
+  execute: async ({ step, complete, fail }) => {},
 
-  await configure({ blocks });
-  // save: async ({ ack, step, update }) => {},
-  // execute: async ({ step, complete, fail }) => {},
-}); 
+})
+
+app.step(ws)
 
 
 // abrir modal para solicitar um techops

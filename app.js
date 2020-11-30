@@ -51,7 +51,8 @@ const ws = new WorkflowStep('techops_created', {
     await ack();
   
     const { values } = view.state;
-    console.log(values);
+    console.log(values.customer_info);
+    console.log(values['customer_info']);
     const taskName = values['customer_info']['customer_info']['type'];
     const taskDescription = values['customer_info']['description']['type'];
     // const taskDescription = values.task_description_input.description;

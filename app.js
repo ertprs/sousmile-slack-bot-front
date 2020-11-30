@@ -120,6 +120,9 @@ const ws = new WorkflowStep('techops_created', {
     
     try {
       const response = await api.createTechOps(payload)
+      
+      console.log('API');
+      console.log(response['data']['id']);
     } catch (error) {
       console.error(error);
     } 
@@ -133,7 +136,7 @@ const ws = new WorkflowStep('techops_created', {
     console.log(inputs)
     console.log('===========');
     const outputs = {
-      techops_id: 123,
+      techops_id: response['data']['id'],
       slack_user_id: inputs.slack_user_id.value,
       customer_info: inputs.customer_info.value,
       description: inputs.description.value,

@@ -108,9 +108,13 @@ const ws = new WorkflowStep('techops_created', {
     await update({ inputs, outputs });
   },
 
-  execute: async ({ step, complete, fail, context }) => {
+  execute: async ({ step, complete, fail, context,body }) => {
     const { inputs } = step;
-
+    console.log('===========');
+    console.log(context);
+    console.log('===========');
+    console.log(body);
+    
     let payload = {
       customer_info: inputs.customer_info.value,
       priority: 'HIGH',
@@ -121,15 +125,15 @@ const ws = new WorkflowStep('techops_created', {
     try {
       const response = await api.createTechOps(payload)
       techOpsId = response['data']['id'];
-      console.log('API');
-      console.log(response['data']['id']);
+      // console.log('API');
+      // console.log(response['data']['id']);
     } catch (error) {
       console.error(error);
     } 
 
-    console.log('===========');
-    console.log(inputs)
-    console.log('===========');
+    // console.log('===========');
+    // console.log(inputs)
+    // console.log('===========');
     const outputs = {
       techops_id: techOpsId,
       slack_user_id: inputs.slack_user_id.value,

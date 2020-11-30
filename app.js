@@ -84,7 +84,23 @@ const ws = new WorkflowStep('techops_created', {
 
     await update({ inputs, outputs });
   },
-  execute: async ({ step, complete, fail }) => {},
+  execute: async ({ step, complete, fail }) => {
+    const { inputs } = step;
+
+    console.log('===========');
+    console.log(inputs)
+    console.log('===========');
+    const outputs = {
+      taskName: inputs.taskName.value,
+      taskDescription: inputs.taskDescription.value,
+    };
+
+    // if everything was successful
+    await complete({ outputs });
+
+    // if something went wrong
+    // fail({ error: { message: "Just testing step failure!" } });
+  },
 
 })
 

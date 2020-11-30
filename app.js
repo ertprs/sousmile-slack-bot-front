@@ -117,26 +117,21 @@ const ws = new WorkflowStep('techops_created', {
       description: inputs.description.value,
       slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>','')
     }
-    
+    let techOpsId;
     try {
       const response = await api.createTechOps(payload)
-      
+      techOpsId = response['data']['id'];
       console.log('API');
       console.log(response['data']['id']);
     } catch (error) {
       console.error(error);
     } 
 
-    // let values = view['state']['values']
-    // let customer = values['customer_info']['customer_info']['value']
-    // let priority = values['priority']['priority']['selected_option']['value']
-    // let description = values['description']['description']['value']
-
     console.log('===========');
     console.log(inputs)
     console.log('===========');
     const outputs = {
-      techops_id: response['data']['id'],
+      techops_id: techOpsId,
       slack_user_id: inputs.slack_user_id.value,
       customer_info: inputs.customer_info.value,
       description: inputs.description.value,

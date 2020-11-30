@@ -1,4 +1,4 @@
-const { App, ExpressReceiver } = require('@slack/bolt');
+const { App, ExpressReceiver, WorkflowStep } = require('@slack/bolt');
 const receiver = new ExpressReceiver({ signingSecret: process.env.SLACK_SIGNING_SECRET });
 
 const messages = require('./messages');
@@ -9,6 +9,50 @@ const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   receiver
 });
+
+
+app.step('techops_created', async ({ ack, step, configure }) => {
+  await ack();
+
+  const blocks = [
+    {
+      type: 'input',
+      block_id: 'task_name_input',
+      element: {
+        type: 'plain_text_input',
+        action_id: 'name',
+        placeholder: {
+          type: 'plain_text',
+          text: 'Add a task name',
+        },
+      },
+      label: {
+        type: 'plain_text',
+        text: 'Task name',
+      },
+    },
+    {
+      type: 'input',
+      block_id: 'task_description_input',
+      element: {
+        type: 'plain_text_input',
+        action_id: 'description',
+        placeholder: {
+          type: 'plain_text',
+          text: 'Add a task description',
+        },
+      },
+      label: {
+        type: 'plain_text',
+        text: 'Task description',
+      },
+    },
+  ];
+
+  await configure({ blocks });
+  // save: async ({ ack, step, update }) => {},
+  // execute: async ({ step, complete, fail }) => {},
+}); 
 
 
 // abrir modal para solicitar um techops

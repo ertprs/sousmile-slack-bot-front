@@ -17,6 +17,19 @@ const ws = new WorkflowStep('techops_created', {
     const blocks = [
       {
         "type": "input",
+        "block_id": "slack_user_id",
+        "element": {
+          "type": "plain_text_input",
+          "action_id": "slack_user_id"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Solicitante",
+          "emoji": true
+        }
+      },
+      {
+        "type": "input",
         "block_id": "customer_info",
         "element": {
           "type": "plain_text_input",
@@ -25,6 +38,19 @@ const ws = new WorkflowStep('techops_created', {
         "label": {
           "type": "plain_text",
           "text": "Informe o nome, email ou case code do usuário",
+          "emoji": true
+        }
+      },
+      {
+        "type": "input",
+        "block_id": "priority",
+        "element": {
+          "type": "plain_text_input",
+          "action_id": "priority"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Prioridade",
           "emoji": true
         }
       },
@@ -65,20 +91,32 @@ const ws = new WorkflowStep('techops_created', {
     const taskDescription = values.description.description;
 
     const inputs = {
-      taskName: { value: taskName.value },
-      taskDescription: { value: taskDescription.value }
+      slack_user_id: { value: values.slack_user_id.slack_user_id.value },
+      customer_info: { value: values.customer_info.customer_info.value },
+      description: { value: values.description.description.value },
+      priority: { value: values.priority.priority.value }
     };
 
     const outputs = [
       {
         type: 'text',
-        name: 'taskName',
+        name: 'slack_user_id',
+        label: 'Task slack_user_id',
+      },
+      {
+        type: 'text',
+        name: 'customer_info',
         label: 'Task name',
       },
       {
         type: 'text',
-        name: 'taskDescription',
+        name: 'description',
         label: 'Task description',
+      },
+      {
+        type: 'text',
+        name: 'priority',
+        label: 'Task priority',
       }
     ];
 
@@ -87,12 +125,20 @@ const ws = new WorkflowStep('techops_created', {
   execute: async ({ step, complete, fail }) => {
     const { inputs } = step;
 
+
+    // let values = view['state']['values']
+    // let customer = values['customer_info']['customer_info']['value']
+    // let priority = values['priority']['priority']['selected_option']['value']
+    // let description = values['description']['description']['value']
+
     console.log('===========');
     console.log(inputs)
     console.log('===========');
     const outputs = {
-      taskName: inputs.taskName.value,
-      taskDescription: inputs.taskDescription.value,
+      slack_user_id: inputs.slack_user_id.value,
+      customer_info: inputs.customer_info.value,
+      description: inputs.description.value,
+      priority: inputs.priority.value 
     };
 
     // if everything was successful

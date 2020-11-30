@@ -115,8 +115,7 @@ const ws = new WorkflowStep('techops_created', {
       customer_info: inputs.customer_info.value,
       priority: 'HIGH',
       description: inputs.description.value,
-      slack_user_id: inputs.slack_user_id.value,
-      slack_user_name: 'ramon.antunes'
+      slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>','')
     }
     
     try {

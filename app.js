@@ -1,6 +1,7 @@
 const { App, ExpressReceiver, WorkflowStep } = require('@slack/bolt');
 const receiver = new ExpressReceiver({ signingSecret: process.env.SLACK_SIGNING_SECRET });
 
+var moment = require('moment');
 const messages = require('./messages');
 const views =  require('./views');
 const api = require('./api');
@@ -301,19 +302,22 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       let requested_at = techopsStatuses.find(status => status['status'] == 'OPEN')['created_at'];
       let assigned_at = techopsStatuses.find(status => status['status'] == 'SOLVING')['created_at'];
       let finished_at = techopsStatuses.find(status => status['status'] == 'FINISHED')['created_at'];
-      var diff = Math.abs(new Date(finished_at) - new Date(requested_at));
-      let minutes = Math.floor((diff/1000)/60);
+      // var diff = Math.abs(new Date(finished_at) - new Date(requested_at));
+      // let minutes = Math.floor((diff/1000)/60);
+      let minutes = moment(finished_at).diff(moment(requested_at), 'days')
 
+      // 2020-12-01T04:58:39.061Z
+      
       console.log(requested_at);
-      console.log(new Date(requested_at));
-      console.log(new Date(requested_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' }));
+      console.log(moment(requested_at).format('DD/MM/YYYY HH:mm:ss'));
+      // console.log(new Date(requested_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' }));
       outputs = {
         techops_id: techOpsId,
         slack_user_id: inputs.slack_user_id.value,
         time: minutes,
-        requested_at: new Date(requested_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' }),
-        assigned_at: new Date(assigned_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' }),
-        finished_at: new Date(finished_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' })
+        requested_at: moment(requested_at).format('DD/MM/YYYY HH:mm:ss'),
+        assigned_at: moment(assigned_at).format('DD/MM/YYYY HH:mm:ss'),
+        finished_at: moment(finished_at).format('DD/MM/YYYY HH:mm:ss'),
       };  
     } catch (error) {
       console.error(error);

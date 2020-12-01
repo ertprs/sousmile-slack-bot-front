@@ -207,10 +207,7 @@ const techopsAssignedWorkflow = new WorkflowStep('techops.request.workflow.assig
 
     const outputs = {
       techops_id: techOpsId,
-      slack_user_id: inputs.slack_user_id.value,
-      customer_info: inputs.customer_info.value,
-      description: inputs.description.value,
-      priority: inputs.priority.value 
+      slack_user_id: inputs.slack_user_id.value
     };
 
     await complete({ outputs });

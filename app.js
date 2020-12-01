@@ -115,7 +115,7 @@ const ws = new WorkflowStep('techops_created', {
     console.log('===========');
     console.log(body);
     
-    let priorityNumber = inputs.priority.priority.value.charAt(0);
+    let priorityNumber = inputs.priority.value.charAt(0);
     let priority = 'LOW';
     if (priorityNumber == '1') {
       priority = 'HIGH';

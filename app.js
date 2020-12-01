@@ -214,7 +214,7 @@ app.step(new WorkflowStep('techops.request.workflow.assigned', {
 
     let outputs = {}
     try {
-      let techOpsId = Math.floor(inputs.techops_id.value);
+      let techOpsId = inputs.techops_id.value;
       let payload = {
         techops_id: techOpsId,
         slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),
@@ -311,7 +311,7 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
     let outputs = {}
 
     try {
-      let techOpsId = inputs.techops_id.value.toString().split('.')[0]
+      let techOpsId = inputs.techops_id.value
       let payload = {
         techops_id: techOpsId,
         slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),

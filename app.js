@@ -375,15 +375,15 @@ app.view('techops.request.view.submit', async ({ ack, body, view, context }) => 
 app.shortcut('techops.list.view.open',  async ({ payload, ack, context }) => {
   ack();
   
-  let a = await messages.findConversation(app, context.botToken);
-  let as = []
-  a.channels.forEach(channel => {
-    as.push({
-      id: channel.id,
-      name: channel.name
-    })
-  })
-  console.log(as);
+  // let a = await messages.findConversation(app, context.botToken);
+  // let as = []
+  // a.channels.forEach(channel => {
+  //   as.push({
+  //     id: channel.id,
+  //     name: channel.name
+  //   })
+  // })
+  // console.log(as);
   
   
   try {

@@ -1,4 +1,5 @@
 const viewBlock = require('./blocks');
+var moment = require('moment');
 
 function translateStatus(status) {
   let translated = 'ABERTO';
@@ -148,9 +149,9 @@ module.exports = {
       
       let responsibleText = '';
       if (item['techops_request_status']) {
-        let statusWithResponsible = item['techops_request_status'].find(status => status['slack_user_name'] != undefined)
+        let statusWithResponsible = item['techops_request_status'].find(status => status['slack_user_id'] != undefined)
         if (statusWithResponsible) {
-          responsibleText = "responsável: *@" + statusWithResponsible['slack_user_name'] + "*";
+          responsibleText = "responsável: *@" + statusWithResponsible['slack_user_id'] + "*";
         }  
       }
       
@@ -164,17 +165,19 @@ module.exports = {
         atribuitionButtonText = ":ballot_box_with_check: Resolver";
       }
       
-      if (item['status'] != 'FINISHED') {
-        atribuitionSection = viewBlock.sectionWithButton(atribuitionSectionText, atribuitionButtonText, atribuitionButtonActionId, atribuitionButtonBlockId);  
-      }
+      // if (item['status'] != 'FINISHED') {
+        // atribuitionSection = viewBlock.sectionWithButton(atribuitionSectionText, atribuitionButtonText, atribuitionButtonActionId, atribuitionButtonBlockId);  
+      // }
       
+      
+
       blocks = blocks.concat(  
         viewBlock.divider(),
         viewBlock.section("\n\n\t\n"),
         atribuitionSection,
-        viewBlock.context("> data: 20/12/2020 10:30:30" + 
+        viewBlock.context("> data: " + moment(item['created_at']).add(-3, 'hours').format('DD/MM/YYYY HH:mm:ss') + 
           "\n>\n> cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + ">" +   
-          "\n> solicitante: @" + item['slack_user_name'] + 
+          "\n> solicitante: @" + item['slack_user_id'] + 
           "\n> prioridade: " + priority + 
           "\n>\n> *Observações:* \n\n" + description)
       );

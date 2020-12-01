@@ -11,7 +11,7 @@ const app = new App({
 });
 
 
-const techopsCreatedWorkflow = new WorkflowStep('techops.request.workflow.created', {
+app.step(new WorkflowStep('techops.request.workflow.created', {
   edit: async ({ ack, step, configure }) => {
     await ack();
     const blocks = [
@@ -124,7 +124,7 @@ const techopsCreatedWorkflow = new WorkflowStep('techops.request.workflow.create
     } 
 
     const outputs = {
-      techops_id: techOpsId,
+      techops_id: Math.floor(techOpsId),
       slack_user_id: inputs.slack_user_id.value,
       customer_info: inputs.customer_info.value,
       description: inputs.description.value,
@@ -133,13 +133,9 @@ const techopsCreatedWorkflow = new WorkflowStep('techops.request.workflow.create
 
     await complete({ outputs });
   },
+}));
 
-})
-app.step(techopsCreatedWorkflow)
-
-
-const techopsAssignedWorkflow = new WorkflowStep('techops.request.workflow.assigned', {
-  
+app.step(new WorkflowStep('techops.request.workflow.assigned', {
   edit: async ({ ack, step, configure }) => {
     
     await ack();
@@ -212,11 +208,85 @@ const techopsAssignedWorkflow = new WorkflowStep('techops.request.workflow.assig
 
     await complete({ outputs });
   },
-});
-app.step(techopsAssignedWorkflow)
+}));
 
+app.step(new WorkflowStep('techops.request.workflow.finished', {
+  edit: async ({ ack, step, configure }) => {
+    
+    await ack();
+    const blocks = [
+      {
+        "type": "input",
+        "block_id": "slack_user_id",
+        "element": {
+          "type": "plain_text_input",
+          "action_id": "slack_user_id"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Responsável",
+          "emoji": true
+        }
+      },
+      {
+        "type": "input",
+        "block_id": "techops_id",
+        "element": {
+          "type": "plain_text_input",
+          "action_id": "techops_id"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Id do techops",
+          "emoji": false
+        }
+      }
+    ];
+  
+    await configure({ blocks });
+  },
+  
+  save: async ({ ack, step, view, update }) => {
+    await ack();
+  
+    const { values } = view.state;
 
-// techops.request.workflow.finished
+    const inputs = {
+      slack_user_id: { value: values.slack_user_id.slack_user_id.value },
+      techops_id: { value: values.techops_id.techops_id.value }
+    };
+
+    const outputs = [];
+
+    await update({ inputs, outputs });
+  },
+
+  execute: async ({ step, complete, fail, context,body }) => {
+    const { inputs } = step;
+
+    let techOpsId = Math.floor(inputs.techops_id.value);
+    let payload = {
+      techops_id: techOpsId,
+      slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),
+      techops_request_id: techOpsId
+    }
+    try {
+      const response = await api.moveToNextStatus(techOpsId, payload);
+    } catch (error) {
+      console.error(error);
+    } 
+
+    const outputs = {
+      techops_id: techOpsId,
+      slack_user_id: inputs.slack_user_id.value,
+      requested_at: '2020-10-10 21:00:00',
+      assigned_at: '2020-10-10 22:00:00',
+      finished_at: '2020-10-10 22:30:00'
+    };
+
+    await complete({ outputs });
+  },
+}));
 
 
 // abrir modal para solicitar um techops

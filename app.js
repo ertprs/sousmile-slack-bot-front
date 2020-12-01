@@ -303,7 +303,7 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       let assigned_at = techopsStatuses.find(status => status['status'] == 'SOLVING')['created_at'];
       let finished_at = techopsStatuses.find(status => status['status'] == 'FINISHED')['created_at'];
       
-      let minutes = Math.round(moment(finished_at).diff(moment(requested_at), 'minutes'))
+      let minutes = Math.floor(moment(finished_at).diff(moment(requested_at), 'minutes'))
 
       // 2020-12-01T04:58:39.061Z
       

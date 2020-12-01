@@ -140,13 +140,13 @@ app.step(new WorkflowStep('techops.request.workflow.created', {
     let techOpsId;
     try {
       const response = await api.createTechOps(payload)
-      techOpsId = response['data']['id'];
+      techOpsId = response['data']['id'].toString().split('.')[0];
     } catch (error) {
       console.error(error);
     } 
 
     const outputs = {
-      techops_id: Math.floor(techOpsId),
+      techops_id: techOpsId,
       slack_user_id: inputs.slack_user_id.value,
       customer_info: inputs.customer_info.value,
       description: inputs.description.value,
@@ -308,7 +308,7 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
   execute: async ({ step, complete, fail, context,body }) => {
     const { inputs } = step;
 
-    let techOpsId = Math.floor(inputs.techops_id.value);
+    let techOpsId = inputs.techops_id.value.toString().split('.')[0]
     let payload = {
       techops_id: techOpsId,
       slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),

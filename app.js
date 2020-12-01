@@ -309,15 +309,15 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       // 2020-12-01T04:58:39.061Z
       
       console.log(requested_at);
-      console.log(moment(requested_at).format('DD/MM/YYYY HH:mm:ss'));
+      console.log(moment.tz(requested_at, 'America/Sao_Paulo').format('DD/MM/YYYY HH:mm:ss'));
       // console.log(new Date(requested_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' }));
       outputs = {
         techops_id: techOpsId,
         slack_user_id: inputs.slack_user_id.value,
         time: minutes,
-        requested_at: moment(requested_at).format('DD/MM/YYYY HH:mm:ss'),
-        assigned_at: moment(assigned_at).format('DD/MM/YYYY HH:mm:ss'),
-        finished_at: moment(finished_at).format('DD/MM/YYYY HH:mm:ss'),
+        requested_at: moment.tz(requested_at, 'America/Sao_Paulo').format('DD/MM/YYYY HH:mm:ss'),
+        assigned_at: moment.tz(assigned_at, 'America/Sao_Paulo').format('DD/MM/YYYY HH:mm:ss'),
+        finished_at: moment.tz(finished_at, 'America/Sao_Paulo').format('DD/MM/YYYY HH:mm:ss'),
       };  
     } catch (error) {
       console.error(error);

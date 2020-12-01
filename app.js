@@ -286,7 +286,7 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),
       techops_request_id: techOpsId
     }
-    const outputs = {
+    let outputs = {
     }
 
     try {

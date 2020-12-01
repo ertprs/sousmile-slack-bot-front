@@ -272,6 +272,11 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
         name: 'finished_at',
         label: 'finished_at',
       },
+      {
+        type: 'text',
+        name: 'time',
+        label: 'time',
+      },
     ];
 
     await update({ inputs, outputs });
@@ -294,12 +299,16 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       let techopsStatuses = response['data']['techops']['techops_request_status']
       
       let requested_at = techopsStatuses.find(status => status['status'] == 'OPEN')['created_at'];
+      let assigned_at = techopsStatuses.find(status => status['status'] == 'SOLVING')['created_at'];
+      let finished_at = techopsStatuses.find(status => status['status'] == 'FINISHED')['created_at'];
+      
       outputs = {
         techops_id: techOpsId,
         slack_user_id: inputs.slack_user_id.value,
-        requested_at: requested_at,
-        assigned_at: '2020-10-10 22:00:00',
-        finished_at: '2020-10-10 22:30:00'
+        time: Math.round((((finished_at - assigned_at) % 86400000) % 3600000) / 60000),   
+        requested_at: new Date(requested_at).toLocaleString('pt-BR'),
+        assigned_at: new Date(assigned_at).toLocaleString('pt-BR'),
+        finished_at: new Date(finished_at).toLocaleString('pt-BR')
       };  
     } catch (error) {
       console.error(error);

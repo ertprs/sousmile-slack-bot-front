@@ -305,8 +305,7 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       let minutes = Math.floor((diff/1000)/60);
 
       console.log(requested_at);
-      console.log(new Date(requested_at).toLocaleString('pt-BR'));
-      console.log(event.);
+      console.log(new Date(requested_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' }));
       outputs = {
         techops_id: techOpsId,
         slack_user_id: inputs.slack_user_id.value,

@@ -301,11 +301,15 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       let requested_at = techopsStatuses.find(status => status['status'] == 'OPEN')['created_at'];
       let assigned_at = techopsStatuses.find(status => status['status'] == 'SOLVING')['created_at'];
       let finished_at = techopsStatuses.find(status => status['status'] == 'FINISHED')['created_at'];
-      
+      var diff = Math.abs(new Date(finished_at) - new Date(requested_at));
+      let minutes = Math.floor((diff/1000)/60);
+
+      console.log(requested_at);
+      console.log(new Date(requested_at).toLocaleString('pt-BR'));
       outputs = {
         techops_id: techOpsId,
         slack_user_id: inputs.slack_user_id.value,
-        time: Math.round((((finished_at - assigned_at) % 86400000) % 3600000) / 60000),   
+        time: minutes,
         requested_at: new Date(requested_at).toLocaleString('pt-BR'),
         assigned_at: new Date(assigned_at).toLocaleString('pt-BR'),
         finished_at: new Date(finished_at).toLocaleString('pt-BR')

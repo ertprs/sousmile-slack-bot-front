@@ -140,7 +140,8 @@ app.step(new WorkflowStep('techops.request.workflow.created', {
     let techOpsId;
     try {
       const response = await api.createTechOps(payload)
-      techOpsId = response['data']['id'].toString().split('.')[0];
+      console.log(response['data']['id']);
+      techOpsId = response['data']['id'].split('.')[0];
     } catch (error) {
       console.error(error);
     } 

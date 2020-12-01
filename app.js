@@ -306,13 +306,14 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
 
       console.log(requested_at);
       console.log(new Date(requested_at).toLocaleString('pt-BR'));
+      console.log(event.);
       outputs = {
         techops_id: techOpsId,
         slack_user_id: inputs.slack_user_id.value,
         time: minutes,
-        requested_at: new Date(requested_at).toLocaleString('pt-BR'),
-        assigned_at: new Date(assigned_at).toLocaleString('pt-BR'),
-        finished_at: new Date(finished_at).toLocaleString('pt-BR')
+        requested_at: new Date(requested_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' }),
+        assigned_at: new Date(assigned_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' }),
+        finished_at: new Date(finished_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' })
       };  
     } catch (error) {
       console.error(error);

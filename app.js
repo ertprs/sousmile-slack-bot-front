@@ -11,6 +11,17 @@ const app = new App({
   receiver
 });
 
+function translatePriority(priority) {
+  let translated = "alta :warning:";
+  if (priority == 'MEDIUM') {
+    translated = "média :left_right_arrow: ";
+  } else if (priority == 'LOW') {
+    translated = "baixa :arrow_down:";
+  }
+  
+  return translated;
+}
+
 
 app.step(new WorkflowStep('techops.request.workflow.created', {
   edit: async ({ ack, step, configure }) => {
@@ -93,6 +104,11 @@ app.step(new WorkflowStep('techops.request.workflow.created', {
         type: 'text',
         name: 'techops_id',
         label: 'techops id',
+      },
+      {
+        type: 'text',
+        name: 'priority',
+        label: 'priority',
       }
     ];
 
@@ -129,7 +145,7 @@ app.step(new WorkflowStep('techops.request.workflow.created', {
       slack_user_id: inputs.slack_user_id.value,
       customer_info: inputs.customer_info.value,
       description: inputs.description.value,
-      priority: inputs.priority.value 
+      priority: translatePriority(priority)
     };
 
     await complete({ outputs });

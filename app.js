@@ -115,9 +115,17 @@ const ws = new WorkflowStep('techops_created', {
     console.log('===========');
     console.log(body);
     
+    let priorityNumber = inputs.priority.priority.value.charAt(0);
+    let priority = 'LOW';
+    if (priorityNumber == '1') {
+      priority = 'HIGH';
+    } else if (priorityNumber == '2') {
+      priority = 'MEDIUM';
+    }
+
     let payload = {
       customer_info: inputs.customer_info.value,
-      priority: 'HIGH',
+      priority: priority,
       description: inputs.description.value,
       slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>','')
     }
@@ -125,8 +133,6 @@ const ws = new WorkflowStep('techops_created', {
     try {
       const response = await api.createTechOps(payload)
       techOpsId = response['data']['id'];
-      // console.log('API');
-      // console.log(response['data']['id']);
     } catch (error) {
       console.error(error);
     } 

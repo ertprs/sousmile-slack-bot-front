@@ -177,7 +177,7 @@ module.exports = {
         atribuitionSection,
         viewBlock.context("> data: " + moment(item['created_at']).add(-3, 'hours').format('DD/MM/YYYY HH:mm:ss') + 
           "\n>\n> cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+item['customer_info']+"|" + item['customer_info'] + ">" +   
-          "\n> solicitante: @" + item['slack_user_id'] + 
+          "\n> solicitante: @<" + item['slack_user_id'] + ">" +
           "\n> prioridade: " + priority + 
           "\n>\n> *Observações:* \n\n" + description)
       );

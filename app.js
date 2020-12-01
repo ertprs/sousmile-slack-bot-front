@@ -11,7 +11,7 @@ const app = new App({
 });
 
 
-const ws = new WorkflowStep('techops_created', {
+const techopsCreatedWorkflow = new WorkflowStep('techops.request.workflow.created', {
   edit: async ({ ack, step, configure }) => {
     await ack();
     const blocks = [
@@ -77,16 +77,6 @@ const ws = new WorkflowStep('techops_created', {
     await ack();
   
     const { values } = view.state;
-    console.log('===========');
-    console.log(values.customer_info.customer_info);
-    console.log('===========');
-    console.log(values.description.description);
-    console.log('===========');
-    // console.log(values['customer_info']);
-    // const taskName = values['customer_info']['customer_info']['type'];
-    // const taskDescription = values['customer_info']['description']['type'];
-
-    // const taskName = 'taskName';
     const taskName = values.customer_info.customer_info;
     const taskDescription = values.description.description;
 
@@ -110,10 +100,6 @@ const ws = new WorkflowStep('techops_created', {
 
   execute: async ({ step, complete, fail, context,body }) => {
     const { inputs } = step;
-    console.log('===========');
-    console.log(context);
-    console.log('===========');
-    console.log(body);
     
     let priorityNumber = inputs.priority.value.charAt(0);
     let priority = 'LOW';
@@ -137,9 +123,6 @@ const ws = new WorkflowStep('techops_created', {
       console.error(error);
     } 
 
-    // console.log('===========');
-    // console.log(inputs)
-    // console.log('===========');
     const outputs = {
       techops_id: techOpsId,
       slack_user_id: inputs.slack_user_id.value,
@@ -148,16 +131,95 @@ const ws = new WorkflowStep('techops_created', {
       priority: inputs.priority.value 
     };
 
-    // if everything was successful
     await complete({ outputs });
-
-    // if something went wrong
-    // fail({ error: { message: "Just testing step failure!" } });
   },
 
 })
+app.step(techopsCreatedWorkflow)
 
-app.step(ws)
+
+const techopsAssignedWorkflow = new WorkflowStep('techops.request.workflow.assigned', {
+  
+  edit: async ({ ack, step, configure }) => {
+    
+    await ack();
+    const blocks = [
+      {
+        "type": "input",
+        "block_id": "slack_user_id",
+        "element": {
+          "type": "plain_text_input",
+          "action_id": "slack_user_id"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Responsável",
+          "emoji": true
+        }
+      },
+      {
+        "type": "input",
+        "block_id": "techops_id",
+        "element": {
+          "type": "plain_text_input",
+          "action_id": "techops_id"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Id do techops",
+          "emoji": false
+        }
+      }
+    ];
+  
+    await configure({ blocks });
+  },
+  
+  save: async ({ ack, step, view, update }) => {
+    await ack();
+  
+    const { values } = view.state;
+
+    const inputs = {
+      slack_user_id: { value: values.slack_user_id.slack_user_id.value },
+      techops_id: { value: values.techops_id.techops_id.value }
+    };
+
+    const outputs = [];
+
+    await update({ inputs, outputs });
+  },
+
+  execute: async ({ step, complete, fail, context,body }) => {
+    const { inputs } = step;
+
+    let techOpsId = inputs.techops_id.value
+    let payload = {
+      techops_id: techOpsId,
+      slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),
+      techops_request_id: techOpsId
+    }
+    try {
+      const response = await api.moveToNextStatus(techOpsId, payload);
+    } catch (error) {
+      console.error(error);
+    } 
+
+    const outputs = {
+      techops_id: techOpsId,
+      slack_user_id: inputs.slack_user_id.value,
+      customer_info: inputs.customer_info.value,
+      description: inputs.description.value,
+      priority: inputs.priority.value 
+    };
+
+    await complete({ outputs });
+  },
+});
+app.step(techopsAssignedWorkflow)
+
+
+// techops.request.workflow.finished
 
 
 // abrir modal para solicitar um techops

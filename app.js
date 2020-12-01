@@ -256,7 +256,23 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       techops_id: { value: values.techops_id.techops_id.value }
     };
 
-    const outputs = [];
+    const outputs = [
+      {
+        type: 'text',
+        name: 'requested_at',
+        label: 'requested_at',
+      },
+      {
+        type: 'text',
+        name: 'assigned_at',
+        label: 'assigned_at',
+      },
+      {
+        type: 'text',
+        name: 'finished_at',
+        label: 'finished_at',
+      },
+    ];
 
     await update({ inputs, outputs });
   },

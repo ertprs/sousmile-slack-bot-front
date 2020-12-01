@@ -286,19 +286,24 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),
       techops_request_id: techOpsId
     }
+    const outputs = {
+    }
+
     try {
       const response = await api.moveToNextStatus(techOpsId, payload);
+      let techopsStatuses = response['data']['techops']['techops_request_status']
+      
+      let requested_at = techopsStatuses.find(status => status['status'] == 'OPEN')['created_at'];
+      outputs = {
+        techops_id: techOpsId,
+        slack_user_id: inputs.slack_user_id.value,
+        requested_at: requested_at,
+        assigned_at: '2020-10-10 22:00:00',
+        finished_at: '2020-10-10 22:30:00'
+      };  
     } catch (error) {
       console.error(error);
     } 
-
-    const outputs = {
-      techops_id: techOpsId,
-      slack_user_id: inputs.slack_user_id.value,
-      requested_at: '2020-10-10 21:00:00',
-      assigned_at: '2020-10-10 22:00:00',
-      finished_at: '2020-10-10 22:30:00'
-    };
 
     await complete({ outputs });
   },

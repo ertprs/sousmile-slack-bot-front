@@ -168,8 +168,6 @@ module.exports = {
       // if (item['status'] != 'FINISHED') {
         // atribuitionSection = viewBlock.sectionWithButton(atribuitionSectionText, atribuitionButtonText, atribuitionButtonActionId, atribuitionButtonBlockId);  
       // }
-      
-      
 
       blocks = blocks.concat(  
         viewBlock.divider(),

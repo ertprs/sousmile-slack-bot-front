@@ -304,7 +304,7 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       let finished_at = techopsStatuses.find(status => status['status'] == 'FINISHED')['created_at'];
       // var diff = Math.abs(new Date(finished_at) - new Date(requested_at));
       // let minutes = Math.floor((diff/1000)/60);
-      let minutes = Math.floor(moment(finished_at).diff(moment(requested_at), 'minutes'))
+      let minutes = Math.round(moment(finished_at).diff(moment(requested_at), 'minutes'))
 
       // 2020-12-01T04:58:39.061Z
       

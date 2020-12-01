@@ -151,7 +151,7 @@ app.step(new WorkflowStep('techops.request.workflow.created', {
       customer_info: inputs.customer_info.value,
       description: inputs.description.value,
       priority: translatePriority(priority),
-      customer_link: "<http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+inputs.customer_info.value+"|" + inputs.customer_info.value + ">"
+      customer_link: "http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+inputs.customer_info.value
     };
 
     await complete({ outputs });

@@ -109,6 +109,11 @@ app.step(new WorkflowStep('techops.request.workflow.created', {
         type: 'text',
         name: 'priority',
         label: 'priority',
+      },
+      {
+        type: 'text',
+        name: 'customer_link',
+        label: 'customer_link',
       }
     ];
 
@@ -145,7 +150,8 @@ app.step(new WorkflowStep('techops.request.workflow.created', {
       slack_user_id: inputs.slack_user_id.value,
       customer_info: inputs.customer_info.value,
       description: inputs.description.value,
-      priority: translatePriority(priority)
+      priority: translatePriority(priority),
+      customer_link: "<http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+inputs.customer_info.value+"|" + inputs.customer_info.value + ">"
     };
 
     await complete({ outputs });

@@ -212,22 +212,22 @@ app.step(new WorkflowStep('techops.request.workflow.assigned', {
   execute: async ({ step, complete, fail, context,body }) => {
     const { inputs } = step;
 
-    let techOpsId = Math.floor(inputs.techops_id.value);
-    let payload = {
-      techops_id: techOpsId,
-      slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),
-      techops_request_id: techOpsId
-    }
+    let outputs = {}
     try {
+      let techOpsId = Math.floor(inputs.techops_id.value);
+      let payload = {
+        techops_id: techOpsId,
+        slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),
+        techops_request_id: techOpsId
+      }
       const response = await api.moveToNextStatus(techOpsId, payload);
+      outputs = {
+        techops_id: techOpsId,
+        slack_user_id: inputs.slack_user_id.value
+      };
     } catch (error) {
       console.error(error);
     } 
-
-    const outputs = {
-      techops_id: techOpsId,
-      slack_user_id: inputs.slack_user_id.value
-    };
 
     await complete({ outputs });
   },
@@ -307,17 +307,17 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
 
   execute: async ({ step, complete, fail, context,body }) => {
     const { inputs } = step;
-
-    let techOpsId = inputs.techops_id.value.toString().split('.')[0]
-    let payload = {
-      techops_id: techOpsId,
-      slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),
-      techops_request_id: techOpsId
-    }
-    let outputs = {
-    }
+    
+    let outputs = {}
 
     try {
+      let techOpsId = inputs.techops_id.value.toString().split('.')[0]
+      let payload = {
+        techops_id: techOpsId,
+        slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),
+        techops_request_id: techOpsId
+      }
+
       const response = await api.moveToNextStatus(techOpsId, payload);
       let techopsStatuses = response['data']['techops']['techops_request_status']
       
@@ -325,13 +325,10 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
       let assigned_at = techopsStatuses.find(status => status['status'] == 'SOLVING')['created_at'];
       let finished_at = techopsStatuses.find(status => status['status'] == 'FINISHED')['created_at'];
       
-      let minutes = Math.floor(moment(finished_at).diff(moment(requested_at), 'minutes'))
-
-      // 2020-12-01T04:58:39.061Z
+      let minutes = moment(finished_at).diff(moment(requested_at), 'minutes').toString().split('.')[0]
+      console.log(minutes);
+      // console.log(moment(requested_at).add(-3, 'hours').format('DD/MM/YYYY HH:mm:ss'));
       
-      console.log(requested_at);
-      console.log(moment(requested_at).add(-3, 'hours').format('DD/MM/YYYY HH:mm:ss'));
-      // console.log(new Date(requested_at).toLocaleString('en-GB', { timeZone: 'America/Sao_Paulo' }));
       outputs = {
         techops_id: techOpsId,
         slack_user_id: inputs.slack_user_id.value,

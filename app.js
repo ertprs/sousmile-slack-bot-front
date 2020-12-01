@@ -193,7 +193,7 @@ const techopsAssignedWorkflow = new WorkflowStep('techops.request.workflow.assig
   execute: async ({ step, complete, fail, context,body }) => {
     const { inputs } = step;
 
-    let techOpsId = inputs.techops_id.value
+    let techOpsId = Math.floor(inputs.techops_id.value);
     let payload = {
       techops_id: techOpsId,
       slack_user_id: inputs.slack_user_id.value.replace('<@','').replace('>',''),

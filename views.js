@@ -149,7 +149,7 @@ module.exports = {
       
       let responsibleText = '';
       if (item['techops_request_status']) {
-        let statusWithResponsible = item['techops_request_status'].find(status => status['slack_user_id'] != undefined)
+        let statusWithResponsible = item['techops_request_status'].find(status => status['status'] == 'SOLVING')
         if (statusWithResponsible) {
           responsibleText = "responsável: *@" + statusWithResponsible['slack_user_id'] + "*";
         }  

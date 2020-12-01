@@ -41,6 +41,23 @@ app.step(new WorkflowStep('techops.request.workflow.created', {
         }
       },
       {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "seila"
+        },
+        "block_id": 'techops.list.view.open.1234',
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": 'seila',  
+            "emoji": true
+          },
+          "action_id": 'techops.list.view.open'
+        },
+      },
+      {
         "type": "input",
         "block_id": "customer_info",
         "element": {

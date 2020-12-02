@@ -367,9 +367,11 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     const inputs = { };
     const outputs = [ ];
 
-    const response = await api.listTechOpsByPriority('HIGH');
-      response['data']['priority_to_filter'] = 'HIGH';
-      const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
+    // 
+    let result = await messages.techopsResume(app, context.botToken);
+      // const response = await api.listTechOpsByPriority('HIGH');
+      // response['data']['priority_to_filter'] = 'HIGH';
+      // const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
 
     await update({ inputs, outputs });
   },

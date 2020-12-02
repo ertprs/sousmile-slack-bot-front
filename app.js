@@ -353,22 +353,43 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
 app.step(new WorkflowStep('techops.reminder.workflow.list', {
   edit: async ({ ack, step, configure }) => {
     await ack();
-    const blocks = [];
+    const blocks = [
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "Test block with multi conversations select"
+        },
+        "accessory": {
+          "type": "multi_conversations_select",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select conversations",
+            "emoji": true
+          },
+          "action_id": "channel_id"
+        }
+      }
+    ];
 
     await configure({ blocks });
   },
   
   save: async ({ ack, step, view, context, update }) => {
     await ack();
-    console.log(step);
-    console.log(view);
+    // console.log(step);
+    // console.log(view);
     
     const { values } = view.state;
-    const inputs = { };
+    console.log(values);
+    const inputs = {
+      // channel_id: { value: values.slack_user_id.slack_user_id.value },
+      // techops_id: { value: values.techops_id.techops_id.value }
+    };
     const outputs = [ ];
 
     // 
-    let result = await messages.techopsResume(app, context.botToken);
+    // let result = await messages.techopsResume(app, context.botToken);
       // const response = await api.listTechOpsByPriority('HIGH');
       // response['data']['priority_to_filter'] = 'HIGH';
       // const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
@@ -381,9 +402,9 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     console.log(step);
     try {
       // const response = await api.createTechOps(payload)
-      const response = await api.listTechOpsByPriority('HIGH');
-      response['data']['priority_to_filter'] = 'HIGH';
-      const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
+      // const response = await api.listTechOpsByPriority('HIGH');
+      // response['data']['priority_to_filter'] = 'HIGH';
+      // const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
       // console.log(response['data']['id']);
       // techOpsId = response['data']['id'].toString();
     } catch (error) {

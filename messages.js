@@ -29,49 +29,45 @@ module.exports = {
   techopsResume: async function(app, token) {
     let blocks = [
       {
-        "blocks": [
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "*resumo dos techops do dia*"
+        }
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "context",
+        "elements": [
           {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "*resumo dos techops do dia*"
-            }
+            "type": "image",
+            "image_url": "https://api.slack.com/img/blocks/bkb_template_images/notificationsWarningIcon.png",
+            "alt_text": "notifications warning icon"
           },
           {
-            "type": "divider"
-          },
-          {
-            "type": "context",
-            "elements": [
-              {
-                "type": "image",
-                "image_url": "https://api.slack.com/img/blocks/bkb_template_images/notificationsWarningIcon.png",
-                "alt_text": "notifications warning icon"
-              },
-              {
-                "type": "mrkdwn",
-                "text": "*prioridade alta: 0*"
-              }
-            ]
-          },
-          {
-            "type": "context",
-            "elements": [
-              {
-                "type": "image",
-                "image_url": "https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg",
-                "alt_text": "notifications warning icon"
-              },
-              {
-                "type": "mrkdwn",
-                "text": "*prioridade média: 1*"
-              }
-            ]
-          },
-          {
-            "type": "divider"
+            "type": "mrkdwn",
+            "text": "*prioridade alta: 0*"
           }
         ]
+      },
+      {
+        "type": "context",
+        "elements": [
+          {
+            "type": "image",
+            "image_url": "https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg",
+            "alt_text": "notifications warning icon"
+          },
+          {
+            "type": "mrkdwn",
+            "text": "*prioridade média: 1*"
+          }
+        ]
+      },
+      {
+        "type": "divider"
       }
     ]
 

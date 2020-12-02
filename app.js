@@ -358,11 +358,11 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
         "type": "conversations_select",
         "placeholder": {
           "type": "plain_text",
-          "text": "escolha o canal",
+          "text": "Select conversations",
           "emoji": true
         },
         "action_id": "channel_id"
-      },
+      }
     ];
 
     await configure({ blocks });

@@ -22,7 +22,7 @@ function translatePriority(priority) {
   return translated;
 }
 
-
+// save techops from workflow step
 app.step(new WorkflowStep('techops.request.workflow.created', {
   edit: async ({ ack, step, configure }) => {
     await ack();
@@ -159,6 +159,7 @@ app.step(new WorkflowStep('techops.request.workflow.created', {
   },
 }));
 
+// update techps assignee from workflow button step
 app.step(new WorkflowStep('techops.request.workflow.assigned', {
   edit: async ({ ack, step, configure }) => {
     
@@ -234,6 +235,7 @@ app.step(new WorkflowStep('techops.request.workflow.assigned', {
   },
 }));
 
+// finish techops from workflow button step
 app.step(new WorkflowStep('techops.request.workflow.finished', {
   edit: async ({ ack, step, configure }) => {
     
@@ -347,10 +349,56 @@ app.step(new WorkflowStep('techops.request.workflow.finished', {
 }));
 
 
-// abrir modal para solicitar um techops
-app.shortcut('techops.request.view.open',  async ({ payload, ack, context }) => {
-  ack();
+// send reminder of open techops from scheduled workflow
+app.step(new WorkflowStep('techops.reminder.workflow.list', {
+  edit: async ({ ack, step, configure }) => {
+    await ack();
+    const blocks = [];
+
+    await configure({ blocks });
+  },
   
+  save: async ({ ack, step, view, update }) => {
+    await ack();
+  
+    const { values } = view.state;
+    const inputs = { };
+    const outputs = [ ];
+
+    await update({ inputs, outputs });
+  },
+
+  execute: async ({ step, complete, fail, context, body }) => {
+    const { inputs } = step;
+    
+    try {
+      // const response = await api.createTechOps(payload)
+      const response = await api.listTechOpsByPriority('HIGH');
+      // const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
+      // console.log(response['data']['id']);
+      // techOpsId = response['data']['id'].toString();
+    } catch (error) {
+      console.error(error);
+    } 
+
+    const outputs = {
+      // techops_id: techOpsId,
+      // slack_user_id: inputs.slack_user_id.value,
+      // customer_info: inputs.customer_info.value,
+      // description: inputs.description.value,
+      // priority: translatePriority(priority),
+      // customer_link: "http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+inputs.customer_info.value
+    };
+
+    await complete({ outputs });
+  },
+}));
+
+
+
+// # abrir modal para solicitar um techops
+app.shortcut('techops.request.view.open',  async ({ payload, ack, context }) => {
+  return ack();
   try {
     const result = await views.techopsRequest(app, context.botToken, payload)
   } catch (error) {
@@ -358,7 +406,7 @@ app.shortcut('techops.request.view.open',  async ({ payload, ack, context }) => 
   }
 });
 
-// faz o submit do formulário da view para solicitar novo techops
+// # faz o submit do formulário da view para solicitar novo techops
 app.view('techops.request.view.submit', async ({ ack, body, view, context }) => {
   ack();
   
@@ -386,6 +434,26 @@ app.view('techops.request.view.submit', async ({ ack, body, view, context }) => 
     });
     
   } catch (error) {
+    console.error(error);
+  }
+});
+
+// # clica no botão de atribuir em algum item da lista de techops
+app.action('techops.list.view.item.assign', async ({ ack, body, context, client }) => {
+  await ack();
+  
+  let techOpsId = body['actions'][0]['block_id'].replace('techops.list.view.item.assign.', '')
+  let payload = {
+    "slack_user_id": body['user']['id'],
+    "slack_user_name": body['user']['username'],
+    "techops_request_id": techOpsId
+  }
+  
+  try {  
+    const response = await api.moveToNextStatus(techOpsId, payload);
+    await views.techopsList(app, context.botToken, body['trigger_id'], response['data']['all_techops'], body['view']['id']);
+    await messages.techopsStatusChanged(app, context.botToken, response['data']['techops']);
+  }catch(error) {
     console.error(error);
   }
 });
@@ -432,6 +500,7 @@ app.action('techops.list.view.piority.filter.change', async ({ ack, body, contex
 });
 
 
+// botão para finalizar techops na mensagem
 app.action('techops.message.finish.button', async ({ ack, body, say, respond, context, client }) => {
   await ack();
   console.log(body['response_url']);
@@ -452,7 +521,7 @@ app.action('techops.message.finish.button', async ({ ack, body, say, respond, co
   }
 });
 
-// botão de atribir techops
+// botão de atribir techops na mensagem
 app.action('techops.message.assign.button', async ({ ack, body, say, respond, context, client }) => {
   await ack();
   console.log(body['response_url']);
@@ -466,26 +535,6 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
   try {
     const response = await api.moveToNextStatus(techOpsId, payload);
     await messages.techopsCreated(app, context.botToken, response['data']['techops'], respond);
-    await messages.techopsStatusChanged(app, context.botToken, response['data']['techops']);
-  }catch(error) {
-    console.error(error);
-  }
-});
-
-// clica no botão de atribuir em algum item da lista de techops
-app.action('techops.list.view.item.assign', async ({ ack, body, context, client }) => {
-  await ack();
-  
-  let techOpsId = body['actions'][0]['block_id'].replace('techops.list.view.item.assign.', '')
-  let payload = {
-    "slack_user_id": body['user']['id'],
-    "slack_user_name": body['user']['username'],
-    "techops_request_id": techOpsId
-  }
-  
-  try {  
-    const response = await api.moveToNextStatus(techOpsId, payload);
-    await views.techopsList(app, context.botToken, body['trigger_id'], response['data']['all_techops'], body['view']['id']);
     await messages.techopsStatusChanged(app, context.botToken, response['data']['techops']);
   }catch(error) {
     console.error(error);

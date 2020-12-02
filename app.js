@@ -356,7 +356,7 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     const blocks = [
       {
         "type": "section",
-        "block_id": "ramonramon",
+        "block_id": "channel",
         "text": {
           "type": "mrkdwn",
           "text": "Test block with multi conversations select"
@@ -378,19 +378,12 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
   
   save: async ({ ack, step, view, context, update }) => {
     await ack();
-    // console.log(step);
-    // console.log(view);
     
     const { values } = view.state;
-    console.log(values);
-    const inputs = {};
+    const inputs = {
+      channel_id: { value: values.channel.channel_id.selected_conversation }
+    };
     const outputs = [ ];
-
-    // 
-    // let result = await messages.techopsResume(app, context.botToken);
-      // const response = await api.listTechOpsByPriority('HIGH');
-      // response['data']['priority_to_filter'] = 'HIGH';
-      // const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
 
     await update({ inputs, outputs });
   },
@@ -398,30 +391,20 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
   execute: async ({ step, complete, fail, context, body }) => {
     const { inputs } = step;
     console.log(step);
+
+    const channelId = inputs.channel_id.value;
     try {
       // const response = await api.createTechOps(payload)
+      let result = await messages.techopsResume(app, context.botToken, channelId);
       // const response = await api.listTechOpsByPriority('HIGH');
-      // response['data']['priority_to_filter'] = 'HIGH';
-      // const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
-      // console.log(response['data']['id']);
-      // techOpsId = response['data']['id'].toString();
     } catch (error) {
       console.error(error);
     } 
 
-    const outputs = {
-      // techops_id: techOpsId,
-      // slack_user_id: inputs.slack_user_id.value,
-      // customer_info: inputs.customer_info.value,
-      // description: inputs.description.value,
-      // priority: translatePriority(priority),
-      // customer_link: "http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+inputs.customer_info.value
-    };
-
+    const outputs = {};
     await complete({ outputs });
   },
 }));
-
 
 
 // # abrir modal para solicitar um techops

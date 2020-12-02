@@ -26,7 +26,7 @@ function translatePriority(priority) {
 
 module.exports = {
 
-  techopsResume: async function(app, token) {
+  techopsResume: async function(app, token, channelId) {
     let blocks = [
       {
         "type": "section",
@@ -73,9 +73,8 @@ module.exports = {
 
     let messagePayload = {
       token: token,
-      // channel: payload['slack_user_id'],
-      channel: 'C01AVBDGPPV',
-      "blocks": blocks
+      channel: channelId,
+      blocks: blocks
     }
     
     return await app.client.chat.postMessage(messagePayload);

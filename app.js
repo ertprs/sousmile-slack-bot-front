@@ -356,7 +356,7 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     const blocks = [
       {
         "type": "section",
-        "action_id": "channel_id",
+        "block_id": "ramonramon",
         "text": {
           "type": "mrkdwn",
           "text": "Test block with multi conversations select"

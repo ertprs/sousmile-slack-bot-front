@@ -355,21 +355,15 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     await ack();
     const blocks = [
       {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "Test block with multi conversations select"
+        "type": "conversations_select",
+        "block_id": "channel",
+        "placeholder": {
+          "type": "plain_text",
+          "text": "escolha o canal",
+          "emoji": true
         },
-        "accessory": {
-          "type": "multi_conversations_select",
-          "placeholder": {
-            "type": "plain_text",
-            "text": "Select conversations",
-            "emoji": true
-          },
-          "action_id": "channel_id"
-        }
-      }
+        "action_id": "id"
+      },
     ];
 
     await configure({ blocks });

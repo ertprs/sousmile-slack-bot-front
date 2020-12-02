@@ -358,12 +358,18 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     await configure({ blocks });
   },
   
-  save: async ({ ack, step, view, update }) => {
+  save: async ({ ack, step, view, context, update }) => {
     await ack();
-  
+    console.log(step);
+    console.log(view);
+    
     const { values } = view.state;
     const inputs = { };
     const outputs = [ ];
+
+    const response = await api.listTechOpsByPriority('HIGH');
+      response['data']['priority_to_filter'] = 'HIGH';
+      const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
 
     await update({ inputs, outputs });
   },

@@ -27,6 +27,9 @@ function translatePriority(priority) {
 module.exports = {
 
   techopsResume: async function(app, token, channelId) {
+    console.log(channelId);
+    console.log('======-');
+    console.log(token);
     let blocks = [
       {
         "type": "section",

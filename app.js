@@ -380,9 +380,18 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     await ack();
     
     const { values } = view.state;
+    const channelId = values.channel.channel_id.selected_conversation;
     const inputs = {
       channel_id: { value: values.channel.channel_id.selected_conversation }
     };
+
+    try {
+      // const response = await api.createTechOps(payload)
+      let result = await messages.techopsResume(app, context.botToken, channelId);
+      // const response = await api.listTechOpsByPriority('HIGH');
+    } catch (error) {
+      console.error(error);
+    } 
     const outputs = [ ];
 
     await update({ inputs, outputs });
@@ -390,9 +399,10 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
 
   execute: async ({ step, complete, fail, context, body }) => {
     const { inputs } = step;
-    console.log(step);
+    // console.log(step);
 
     const channelId = inputs.channel_id.value;
+    console.log(inputs)
     try {
       // const response = await api.createTechOps(payload)
       let result = await messages.techopsResume(app, context.botToken, channelId);

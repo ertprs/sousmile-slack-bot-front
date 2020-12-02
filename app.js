@@ -356,7 +356,6 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     const blocks = [
       {
         "type": "conversations_select",
-        "block_id": "channel_id",
         "placeholder": {
           "type": "plain_text",
           "text": "escolha o canal",

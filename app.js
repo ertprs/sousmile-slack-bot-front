@@ -356,18 +356,19 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     const blocks = [
       {
         "type": "section",
+        "action_id": "channel_id",
         "text": {
           "type": "mrkdwn",
           "text": "Test block with multi conversations select"
         },
         "accessory": {
           "type": "conversations_select",
+          "action_id": "channel_id",
           "placeholder": {
             "type": "plain_text",
             "text": "Select conversations",
             "emoji": true
-          },
-          "action_id": "channel_id"
+          }
         }
       }
     ];
@@ -382,10 +383,7 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     
     const { values } = view.state;
     console.log(values);
-    const inputs = {
-      // channel_id: { value: values.slack_user_id.slack_user_id.value },
-      // techops_id: { value: values.techops_id.techops_id.value }
-    };
+    const inputs = {};
     const outputs = [ ];
 
     // 

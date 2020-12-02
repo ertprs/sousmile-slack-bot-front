@@ -370,11 +370,12 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
 
   execute: async ({ step, complete, fail, context, body }) => {
     const { inputs } = step;
-    
+    console.log(step);
     try {
       // const response = await api.createTechOps(payload)
       const response = await api.listTechOpsByPriority('HIGH');
-      // const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
+      response['data']['priority_to_filter'] = 'HIGH';
+      const result = await views.techopsList(app, context.botToken, payload.trigger_id, response['data']);
       // console.log(response['data']['id']);
       // techOpsId = response['data']['id'].toString();
     } catch (error) {

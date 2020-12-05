@@ -216,6 +216,7 @@ app.step(new WorkflowStep('techops.request.workflow.assigned', {
     console.log(context);
     console.log('--------------------');
     console.log(body);
+    console.log(body['event']['workflow_step']['inputs']);
     let outputs = {}
     try {
       let techOpsId = inputs.techops_id.value;

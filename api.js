@@ -19,6 +19,10 @@ module.exports = {
   //   return axios.get(process.env.API_URL + '/techops-by-status?status=' + status, requestHeader())
   // },
 
+  listTechopsResume: async function() {
+    return axios.get(process.env.API_URL + '/techops-resume', requestHeader())
+  },
+
   listTechOpsByPriority: async function(priority) {
     return axios.get(process.env.API_URL + '/techops-by-priority?priority=' + priority, requestHeader())
   },

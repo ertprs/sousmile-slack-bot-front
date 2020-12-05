@@ -213,7 +213,9 @@ app.step(new WorkflowStep('techops.request.workflow.assigned', {
 
   execute: async ({ step, complete, fail, context,body }) => {
     const { inputs } = step;
-
+    console.log(context);
+    console.log('--------------------');
+    console.log(body);
     let outputs = {}
     try {
       let techOpsId = inputs.techops_id.value;
@@ -359,14 +361,14 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
         "block_id": "channel",
         "text": {
           "type": "mrkdwn",
-          "text": "Test block with multi conversations select"
+          "text": "Canal para enviar resumo resumo"
         },
         "accessory": {
           "type": "conversations_select",
           "action_id": "channel_id",
           "placeholder": {
             "type": "plain_text",
-            "text": "Select conversations",
+            "text": "Conversas",
             "emoji": true
           }
         }
@@ -380,31 +382,21 @@ app.step(new WorkflowStep('techops.reminder.workflow.list', {
     await ack();
     
     const { values } = view.state;
-    const channelId = values.channel.channel_id.selected_conversation;
     const inputs = {
       channel_id: { value: values.channel.channel_id.selected_conversation }
     };
-
-    try {
-      // const response = await api.createTechOps(payload)
-      let result = await messages.techopsResume(app, context.botToken, channelId);
-      // const response = await api.listTechOpsByPriority('HIGH');
-    } catch (error) {
-      console.error(error);
-    } 
+ 
     const outputs = [ ];
-
     await update({ inputs, outputs });
   },
 
   execute: async ({ step, complete, fail, context, body }) => {
     const { inputs } = step;
-    // console.log(step);
 
     const channelId = inputs.channel_id.value;
-    console.log(inputs)
+    
     try {
-      // const response = await api.createTechOps(payload)
+      const response = await api.listTechopsResume();
       let result = await messages.techopsResume(app, context.botToken, channelId);
       // const response = await api.listTechOpsByPriority('HIGH');
     } catch (error) {
@@ -493,7 +485,6 @@ app.shortcut('techops.list.view.open',  async ({ payload, ack, context }) => {
   //   })
   // })
   // console.log(as);
-  
   
   try {
     const response = await api.listTechOpsByPriority('HIGH');

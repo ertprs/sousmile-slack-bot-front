@@ -180,7 +180,7 @@ module.exports = {
 
     let blocks = viewBlock.section(' :interrobang: *Alguém alterou um diagnóstico de questonário que você é responsável*');
     blocks = blocks.concat(
-      viewBlock.context("alterado por *<@" + payload['modifier_slack_user_id'] + ">" +
+      viewBlock.context(":female-doctor: alterado por *<@" + payload['modifier_slack_user_id'] + ">" +
         "*\t *" + payload['updated_at'] + "*" + 
         "\n> cliente: <http://sousmile-admin-platform.herokuapp.com/painel/"+payload['customer_id']+"|" + payload['customer_name'] + ">" +
         "\n> mudou de ~*" + payload['old_diagnostic_result'] + "*~ para * " + payload['diagnostic_result'] + "* " + 

@@ -177,7 +177,7 @@ module.exports = {
 
   diagnosticChanged: async function(webClient, payload) {    
     // let title = 
-
+    console.log(payload['slack_user_id'])
     let blocks = viewBlock.section(' :interrobang: *Alguém alterou um diagnóstico de questonário que você é responsável*');
     blocks = blocks.concat(
       viewBlock.context(":female-doctor: alterado por *<@" + payload['modifier_slack_user_id'] + ">" +
@@ -186,7 +186,6 @@ module.exports = {
         "\n> mudou de ~*" + payload['old_diagnostic_result'] + "*~ para * " + payload['diagnostic_result'] + "* " + 
         "\n>\n> Observações:\n>```" + payload['observations'] + "```\n>\t")
     );
-    console.log(blocks);
     
     let messagePayload = {
       channel: payload['slack_user_id'],

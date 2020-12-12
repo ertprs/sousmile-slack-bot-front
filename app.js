@@ -567,6 +567,8 @@ receiver.router.post('/message/diangostic', async (req, res) => {
     //   client_secret: '',
 
     // });
+    console.log(req.body);
+    console.log('==============================')
     await messages.diagnosticChanged(web, req.body);
     // const result = await web.chat.postMessage({
     //   text: 'Hello world!',
@@ -574,8 +576,8 @@ receiver.router.post('/message/diangostic', async (req, res) => {
     // });
   
 
-    // console.log(data);
-    // console.log('==============================')
+    
+    
   } catch (error) {
     console.log(error);
   }

@@ -565,7 +565,7 @@ receiver.router.post('/message/diangostic', (req, res) => {
   // console.log('==============================')
   console.log(app);
   console.log('==============================');
-  await messages.diagnosticChanged(app, 'xoxb-405218432613-1467840145619-lZZjwLtt2jcNj5Kk0TnZYqk7', req.body);
+  messages.diagnosticChanged(app, process.env.SLACK_BOT_TOKEN, req.body);
   res.send('yay!');
 });
 

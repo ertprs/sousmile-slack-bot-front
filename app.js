@@ -563,8 +563,8 @@ receiver.router.post('/message/diangostic', (req, res) => {
   // console.log('==============================')
   // console.log(receiver.signingSecret);
   // console.log('==============================')
-  console.log(app);
-  console.log('==============================');
+  // console.log(app);
+  // console.log('==============================');
   try {
     messages.diagnosticChanged(app, process.env.SLACK_BOT_TOKEN, req.body);
   }catch(error) {

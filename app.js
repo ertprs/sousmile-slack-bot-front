@@ -574,15 +574,13 @@ receiver.router.post('/message/diangostic', async (req, res) => {
     //   text: 'Hello world!',
     //   channel: req.body['slack_user_id'],
     // });
-  
-
-    
-    
   } catch (error) {
+    console.log('ERRRO ==============================')
     console.log(error);
   }
 
-  res.send('yay!');
+  res.sendStatus(200)
+  // res.send('yay!');
   
   // console.log(app.botToken);
   // console.log('==============================')

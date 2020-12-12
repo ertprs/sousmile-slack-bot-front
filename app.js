@@ -1,6 +1,6 @@
 const { App, ExpressReceiver, WorkflowStep } = require('@slack/bolt');
+const express = require('express');
 const receiver = new ExpressReceiver({ signingSecret: process.env.SLACK_SIGNING_SECRET });
-
 
 var moment = require('moment');
 const messages = require('./messages');
@@ -555,9 +555,9 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
   }
 });
 
-
+receiver.router.use(express.json());
 receiver.router.post('/message/diangostic', (req, res) => {
-  console.log(req['body']);
+  console.log(req.body);
   console.log('==============================')
   console.log(app.botToken);
   console.log('==============================')

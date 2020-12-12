@@ -559,11 +559,11 @@ receiver.router.use(express.json());
 receiver.router.post('/message/diangostic', (req, res) => {
   console.log(req.body);
   console.log('==============================')
-  console.log(app.botToken);
-  console.log('==============================')
-  console.log(receiver.signingSecret);
-  console.log('==============================')
-  console.log(receiver);
+  // console.log(app.botToken);
+  // console.log('==============================')
+  // console.log(receiver.signingSecret);
+  // console.log('==============================')
+  console.log(app);
   console.log('==============================')
   // await messages.techopsCreated(app, app.botToken, response['data']['techops'], respond);
   res.send('yay!');

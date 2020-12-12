@@ -570,6 +570,7 @@ receiver.router.post('/message/diangostic', async (req, res) => {
     console.log(req.body);
     console.log('==============================')
     await messages.diagnosticChanged(web, req.body);
+    await messages.diagnosticChanged(web, req.body, true);
     // const result = await web.chat.postMessage({
     //   text: 'Hello world!',
     //   channel: req.body['slack_user_id'],

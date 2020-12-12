@@ -175,11 +175,17 @@ module.exports = {
     });
   },
 
-  diagnosticChanged: async function(webClient, payload) {    
-    console.log('M ==============================');
+  diagnosticChanged: async function(webClient, payload, sendToDevChannel = false) {    
+    console.log('==============================');
     console.log(payload['slack_user_id']);
-    
-    let blocks = viewBlock.section(' :interrobang: *Alguém alterou um diagnóstico de questonário que você é responsável*');
+
+    let channel = payload['slack_user_id'];
+    let subtitle = '';
+    if(sendToDevChannel === true) {
+      subtitle = 'Mensagem enviada para <@' + payload['slack_user_id'] + '>: \n';
+      channel = 'C01AVBDGPPV';
+    }
+    let blocks = viewBlock.section(subtitle + ' :interrobang: *Alguém alterou um diagnóstico de questonário que você é responsável*');
     blocks = blocks.concat(
       viewBlock.context("alterado por *<@" + payload['modifier_slack_user_id'] + ">" +
         "*\t *" + payload['updated_at'] + "*" + 
@@ -187,10 +193,9 @@ module.exports = {
         "\n> mudou de ~*" + payload['old_diagnostic_result'] + "*~ para * " + payload['diagnostic_result'] + "* " + 
         "\n>\n> Observações:\n>```" + payload['observations'] + "```\n>\t")
     );
-    
+
     let messagePayload = {
-      channel: payload['slack_user_id'],
-      // channel: 'C01AVBDGPPV',
+      channel: channel,
       "blocks": blocks
     }
     

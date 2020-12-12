@@ -556,7 +556,11 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
 });
 
 
-receiver.router.get('/secret-page', (req, res) => {
+receiver.router.get('/message/diangostic', (req, res) => {
+  console.log(req);
+  console.log(app.botToken);
+  console.log(receiver.signingSecret);
+  // await messages.techopsCreated(app, app.botToken, response['data']['techops'], respond);
   res.send('yay!');
 });
 

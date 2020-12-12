@@ -176,7 +176,7 @@ module.exports = {
   },
 
   diagnosticChanged: async function(webClient, payload) {    
-    // let title = 
+    
     console.log(payload['slack_user_id'])
     let blocks = viewBlock.section(' :interrobang: *Alguém alterou um diagnóstico de questonário que você é responsável*');
     blocks = blocks.concat(

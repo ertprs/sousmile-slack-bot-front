@@ -183,7 +183,7 @@ module.exports = {
       viewBlock.context("alterado por *<@" + payload['modifier_slack_user_id'] + ">" +
         "*\t *" + payload['updated_at'] + "*" + 
         "\n> cliente: <http://sousmile-admin-platform.herokuapp.com/painel/"+payload['customer_id']+"|" + payload['customer_name'] + ">" +
-        "\n> mudou de *" + payload['old_diagnostic_result'] + "* para * " + payload['diagnostic_result'] + "* " + 
+        "\n> mudou de ~*" + payload['old_diagnostic_result'] + "*~ para * " + payload['diagnostic_result'] + "* " + 
         "\n>\n> Observações:\n>```" + payload['observations'] + "```\n>\t")
     );
     console.log(blocks);

@@ -176,11 +176,11 @@ module.exports = {
   },
 
   diagnosticChanged: async function(webClient, payload) {    
-    let title = viewBlock.section('*Alguém alterou um diagnóstico de questonário que você é responsável*');  
-        
+    // let title = 
+
     let blocks = []
     blocks = blocks.concat(  
-      title,
+      viewBlock.section('*Alguém alterou um diagnóstico de questonário que você é responsável*'),
       viewBlock.divider,
       viewBlock.context("alterado por *" + payload['modifier_slack_user_id'] +
         "*\t *" + payload['updated_at'] + "*" + 

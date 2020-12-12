@@ -175,7 +175,7 @@ module.exports = {
     });
   },
 
-  diagnosticChanged: async function(app, token, payload) {    
+  diagnosticChanged: async function(webClient, payload) {    
     let status = 'sadasdsadas';
     let priority = 'asasas';
     let description = payload['alignment_result'];
@@ -206,7 +206,7 @@ module.exports = {
       "blocks": blocks
     }
     
-    return await app.client.chat.postMessage(messagePayload);
+    return await webClient.chat.postMessage(messagePayload);
   },
   
   findConversation: async function(app, token) {

@@ -567,11 +567,11 @@ receiver.router.post('/message/diangostic', async (req, res) => {
     //   client_secret: '',
 
     // });
-    
-    const result = await web.chat.postMessage({
-      text: 'Hello world!',
-      channel: req.body['slack_user_id'],
-    });
+    await messages.diagnosticChanged(web, req.body);
+    // const result = await web.chat.postMessage({
+    //   text: 'Hello world!',
+    //   channel: req.body['slack_user_id'],
+    // });
   
 
     // console.log(data);

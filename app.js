@@ -1,3 +1,4 @@
+const { WebClient } = require('@slack/web-api');
 const { App, ExpressReceiver, WorkflowStep } = require('@slack/bolt');
 const express = require('express');
 const receiver = new ExpressReceiver({ signingSecret: process.env.SLACK_SIGNING_SECRET });
@@ -6,11 +7,14 @@ var moment = require('moment');
 const messages = require('./messages');
 const views =  require('./views');
 const api = require('./api');
+const web = new WebClient(process.env.SLACK_BOT_TOKEN);
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   receiver
 });
+
+
 
 function translatePriority(priority) {
   let translated = "alta :warning:";
@@ -558,15 +562,20 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
 receiver.router.use(express.json());
 receiver.router.post('/message/diangostic', async (req, res) => {
   try {
-    let data = await app.client.oauth.access({
-      client_id: '',
-      client_secret: '',
+    // let data = await app.client.oauth.access({
+    //   client_id: '',
+    //   client_secret: '',
 
+    // });
+    
+    const result = await web.chat.postMessage({
+      text: 'Hello world!',
+      channel: req.body['slack_user_id'],
     });
   
 
-    console.log(data);
-    console.log('==============================')
+    // console.log(data);
+    // console.log('==============================')
   } catch (error) {
     console.log(error);
   }

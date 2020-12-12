@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@slack/bolt": "^2.2.3",
+    "@slack/web-api": "^5.14.0",
     "axios": "^0.20.0",
     "moment": "^2.29.1"
   },

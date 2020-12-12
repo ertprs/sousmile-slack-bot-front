@@ -556,14 +556,23 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
 });
 
 receiver.router.use(express.json());
-receiver.router.post('/message/diangostic', (req, res) => {
-  let data = app.client.oauth.access({
-    client_id: '405218432613.1460901463494',
-    client_secret: '0b2df77d8563cec77a50eb0fa829901a'
-  });
+receiver.router.post('/message/diangostic', async (req, res) => {
+  try {
+    let data = await app.client.oauth.access({
+      client_id: '405218432613.1460901463494',
+      client_secret: '0b2df77d8563cec77a50eb0fa829901a'
+    });
+    
+    
 
-  console.log(data);
-  console.log('==============================')
+    console.log(data);
+    console.log('==============================')
+  } catch (error) {
+    console.log(error);
+  }
+
+  res.send('yay!');
+  
   // console.log(app.botToken);
   // console.log('==============================')
   // console.log(receiver.signingSecret);
@@ -575,7 +584,7 @@ receiver.router.post('/message/diangostic', (req, res) => {
   // }catch(error) {
   //   console.error(error);
   // }
-  res.send('yay!');
+  
 });
 
 

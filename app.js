@@ -563,8 +563,7 @@ receiver.router.post('/message/diangostic', async (req, res) => {
       client_secret: '',
 
     });
-    
-    
+  
 
     console.log(data);
     console.log('==============================')

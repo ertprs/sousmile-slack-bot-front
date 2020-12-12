@@ -200,7 +200,6 @@ module.exports = {
     );
     
     let messagePayload = {
-      token: token,
       channel: payload['slack_user_id'],
       // channel: 'C01AVBDGPPV',
       "blocks": blocks

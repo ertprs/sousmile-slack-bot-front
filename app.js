@@ -556,7 +556,7 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
 });
 
 
-receiver.router.get('/message/diangostic', (req, res) => {
+receiver.router.post('/message/diangostic', (req, res) => {
   console.log(req);
   console.log(app.botToken);
   console.log(receiver.signingSecret);

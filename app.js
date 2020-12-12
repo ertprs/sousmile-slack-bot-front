@@ -565,7 +565,7 @@ receiver.router.post('/message/diangostic', (req, res) => {
   // console.log('==============================')
   console.log(app);
   console.log('==============================')
-  // await messages.techopsCreated(app, app.botToken, response['data']['techops'], respond);
+  await messages.diagnosticChanged(app, process.env.SLACK_BOT_TOKEN, req.body);
   res.send('yay!');
 });
 

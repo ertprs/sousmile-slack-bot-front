@@ -174,6 +174,40 @@ module.exports = {
       "blocks": viewBlock.section(responsibleText)
     });
   },
+
+  diagnosticChanged: async function(app, token, payload) {    
+    let status = 'sadasdsadas';
+    let priority = 'asasas';
+    let description = payload['alignment_result'];
+    let atribuitionButtonActionId = "techops.message.assign.button";
+    
+    let atribuitionButtonBlockId = atribuitionButtonActionId;
+    let atribuitionSectionText = "@ramonzito novo techops";
+    let atribuitionButtonText = ":ballot_box_with_check: atribuir";
+    let atribuitionSection = viewBlock.sectionWithButton(atribuitionSectionText, atribuitionButtonText, atribuitionButtonActionId, atribuitionButtonBlockId);  
+    // if (respond) {
+      // atribuitionSection = viewBlock.section(atribuitionSectionText);    
+    // }
+    
+    let blocks = []
+    blocks = blocks.concat(  
+      atribuitionSection,
+      viewBlock.context("> data: 20/12/2020 10:30:30" + 
+        "\n> \n> cliente: <http://sousmile-admin-platform.herokuapp.com/clientes?emailSearch="+payload['slack_user_id']+"|" + payload['slack_user_id'] + ">" +
+        "\n> solicitante: @" + payload['slack_user_id'] + 
+        "\n> prioridade: " + priority + 
+        "\n> \n> *Observações:* \n\n " + description)
+    );
+    
+    let messagePayload = {
+      token: token,
+      channel: payload['slack_user_id'],
+      // channel: 'C01AVBDGPPV',
+      "blocks": blocks
+    }
+    
+    return await app.client.chat.postMessage(messagePayload);
+  },
   
   findConversation: async function(app, token) {
     try {

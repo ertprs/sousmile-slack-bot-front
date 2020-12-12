@@ -556,8 +556,8 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
 });
 
 receiver.router.use(express.json());
-receiver.router.post('/message/diangostic', async (req, res) => {
-  let data = await app.client.oauth.access({
+receiver.router.post('/message/diangostic', (req, res) => {
+  let data = app.client.oauth.access({
     client_id: '405218432613.1460901463494',
     client_secret: '0b2df77d8563cec77a50eb0fa829901a'
   });
@@ -575,7 +575,7 @@ receiver.router.post('/message/diangostic', async (req, res) => {
   // }catch(error) {
   //   console.error(error);
   // }
-  // res.send('yay!');
+  res.send('yay!');
 });
 
 

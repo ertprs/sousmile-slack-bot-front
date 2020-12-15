@@ -162,7 +162,7 @@ module.exports = {
     return await app.client.chat.postMessage(messagePayload);
   },
   
-  recurrenceWhatsappSent: async function(app, token, payload, respond) {    
+  recurrenceWhatsappSent: async function(app, token, payload) {    
     section = viewBlock.section('> *mensagem enviada!*');
 
     let messagePayload = {
@@ -172,7 +172,7 @@ module.exports = {
       "blocks": section
     }
 
-    return await respond(messagePayload);
+    return await app.client.chat.postMessage(messagePayload);
   },
 
   techopsFinished: async function(app, token, payload) {    

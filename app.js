@@ -559,7 +559,7 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
   }
 });
 
-app.action('send_message', async ({ ack, body, respond, context, client }) => {
+app.action('send_message', async ({ ack, body, context, client }) => {
   await ack();
 
 
@@ -567,17 +567,18 @@ app.action('send_message', async ({ ack, body, respond, context, client }) => {
     "message_ts": body['container']['message_ts'],
     "slack_channel": body['container']['channel_id']
   }
-  await messages.recurrenceWhatsappSent(app, context.botToken, payload, respond)
-  await respond(payload)
+  await messages.recurrenceWhatsappSent(app, context.botToken, payload)
+  // await respond(payload)
 
-  // console.log(context);
-  console.log('==============================');
-  console.log(body['container']);
-  console.log('==============================');
-  console.log(body['container']['message_ts']);
-  console.log('==============================');
-  console.log(body);
-  console.log('==============================');
+
+  console.log(payload);
+  // console.log('==============================');
+  // console.log(body['container']);
+  // console.log('==============================');
+  // console.log(body['container']['message_ts']);
+  // console.log('==============================');
+  // console.log(body);
+  // console.log('==============================');
 });
 
 receiver.router.use(express.json());

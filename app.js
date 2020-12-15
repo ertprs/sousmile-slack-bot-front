@@ -561,8 +561,11 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
 
 app.action('send_message', async ({ ack, body, context, client }) => {
   await ack();
-
-  console.log(context);
+  // console.log(context);
+  console.log('==============================');
+  console.log(body['container']);
+  console.log('==============================');
+  console.log(body['container']['message_ts']);
   console.log('==============================');
   console.log(body);
   console.log('==============================');

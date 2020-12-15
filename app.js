@@ -572,6 +572,9 @@ app.action('send_message', async ({ ack, body, context, client }) => {
 
   console.log('==============================');
   console.log(payload);
+  console.log('==============================');
+  console.log(body);
+  console.log('==============================');
   await messages.recurrenceWhatsappSent(app, context.botToken, payload)
   
   // console.log(body['container']);

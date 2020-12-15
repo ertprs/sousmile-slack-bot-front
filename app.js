@@ -559,42 +559,28 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
   }
 });
 
+app.action('send_message', async ({ ack, body, context, client }) => {
+  await ack();
+
+  console.log(context);
+  console.log('==============================');
+  console.log(body);
+  console.log('==============================');
+});
+
 receiver.router.use(express.json());
 receiver.router.post('/message/diangostic', async (req, res) => {
   try {
-    // let data = await app.client.oauth.access({
-    //   client_id: '',
-    //   client_secret: '',
-
-    // });
     console.log(req.body);
     console.log('==============================')
     await messages.diagnosticChanged(web, req.body);
     await messages.diagnosticChanged(web, req.body, true);
-    // const result = await web.chat.postMessage({
-    //   text: 'Hello world!',
-    //   channel: req.body['slack_user_id'],
-    // });
   } catch (error) {
     console.log('ERRRO ==============================')
     console.log(error);
   }
 
   res.sendStatus(200)
-  // res.send('yay!');
-  
-  // console.log(app.botToken);
-  // console.log('==============================')
-  // console.log(receiver.signingSecret);
-  // console.log('==============================')
-  // console.log(app);
-  // console.log('==============================');
-  // try {
-  //   await messages.diagnosticChanged(app, process.env.SLACK_BOT_TOKEN, req.body);
-  // }catch(error) {
-  //   console.error(error);
-  // }
-  
 });
 
 

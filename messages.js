@@ -181,9 +181,11 @@ module.exports = {
 
     let channel = payload['slack_user_id'];
     let subtitle = '';
+    
+    
     if(sendToDevChannel === true) {
       subtitle = 'Mensagem enviada para <@' + payload['slack_user_id'] + '>: \n';
-      channel = 'C01AVBDGPPV';
+      channel = 'C01AVBDGPPV'; // #dev-jairo
     }
     let blocks = viewBlock.section(subtitle + ' :interrobang: *Alguém alterou um diagnóstico de questonário que você é responsável*');
     blocks = blocks.concat(

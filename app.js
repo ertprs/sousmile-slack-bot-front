@@ -567,12 +567,13 @@ app.action('send_message', async ({ ack, body, context, client }) => {
     "message_ts": body['container']['message_ts'],
     "slack_channel": body['container']['channel_id']
   }
-  await messages.recurrenceWhatsappSent(app, context.botToken, payload)
+  // await messages.recurrenceWhatsappSent(app, context.botToken, payload)
   // await respond(payload)
 
-
+  console.log('==============================');
   console.log(payload);
-  // console.log('==============================');
+  await messages.recurrenceWhatsappSent(app, context.botToken, payload)
+  
   // console.log(body['container']);
   // console.log('==============================');
   // console.log(body['container']['message_ts']);

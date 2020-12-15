@@ -167,7 +167,6 @@ module.exports = {
 
     let messagePayload = {
       token: token,
-      channel: payload['slack_channel'],
       thread_ts: payload['message_ts'],
       "blocks": section
     }

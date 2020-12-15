@@ -559,8 +559,17 @@ app.action('techops.message.assign.button', async ({ ack, body, say, respond, co
   }
 });
 
-app.action('send_message', async ({ ack, body, context, client }) => {
+app.action('send_message', async ({ ack, body, respond, context, client }) => {
   await ack();
+
+
+  let payload = {
+    "message_ts": body['container']['message_ts'],
+    "slack_channel": body['container']['channel_id']
+  }
+  await messages.recurrenceWhatsappSent(app, context.botToken, payload, respond)
+  await respond(payload)
+
   // console.log(context);
   console.log('==============================');
   console.log(body['container']);

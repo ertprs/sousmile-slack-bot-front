@@ -162,6 +162,19 @@ module.exports = {
     return await app.client.chat.postMessage(messagePayload);
   },
   
+  recurrenceWhatsappSent: async function(app, token, payload, respond) {    
+    section = viewBlock.section('> *mensagem enviada!*');
+
+    let messagePayload = {
+      token: token,
+      channel: payload['slack_channel'],
+      thread_ts: payload['message_ts'],
+      "blocks": section
+    }
+
+    return await respond(messagePayload);
+  },
+
   techopsFinished: async function(app, token, payload) {    
     let statusMessage = "@" + payload['slack_user_name'] + " problema resolvido";
     let status = translateStatus(payload['status']);

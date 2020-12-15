@@ -163,13 +163,17 @@ module.exports = {
   },
   
   recurrenceWhatsappSent: async function(app, token, payload) {    
-    section = viewBlock.section('> *mensagem enviada!*');
+    let section = viewBlock.section('> *mensagem enviada!*');
 
     let messagePayload = {
       token: token,
+      channel: payload['slack_channel'],
       thread_ts: payload['message_ts'],
       "blocks": section
     }
+    console.log('==============================');
+    console.log(messagePayload);
+    console.log('==============================');
 
     return await app.client.chat.postMessage(messagePayload);
   },

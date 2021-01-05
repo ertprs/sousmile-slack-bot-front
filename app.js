@@ -27,6 +27,171 @@ function translatePriority(priority) {
   return translated;
 }
 
+
+//new employee
+app.shortcut('admin.employee.view.open', async ({ ack, body, say, context }) => {
+  await ack();
+  console.log(body)
+
+  app.client.views.open({
+    token: context.botToken,
+    trigger_id: body.trigger_id,
+    view: {
+      callback_id: 'admin.employee.view.submit',
+      "type": "modal",
+      "title": {
+        "type": "plain_text",
+        "text": "Cadastrar funcionário"
+      },
+      "close": {
+        "type": "plain_text",
+        "text": "Fechar"
+      },
+      "blocks": [
+        {
+          "type": "divider"
+        },
+        {
+          "type": "section",
+          block_id: 'employee.category',
+          "text": {
+            "type": "plain_text",
+            "text": "Escolha a área"
+          },
+          "accessory": {
+            "type": "radio_buttons",
+            "action_id": 'category',
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Dentista",
+                  "emoji": true
+                },
+                "value": "dentist"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Assistente comercial",
+                  "emoji": true
+                },
+                "value": "commercial_assistant"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Produto e Tecnologia",
+                  "emoji": true
+                },
+                "value": "product"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Fábrica",
+                  "emoji": true
+                },
+                "value": "manufacturing"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Marketing",
+                  "emoji": true
+                },
+                "value": "marketing"
+              }
+            ]
+          }
+        },
+        {
+          type: 'input',
+          block_id: 'employee.name',
+          label: {
+            type: 'plain_text',
+            text: 'Nome'
+          },
+          element: {
+            type: 'plain_text_input',
+            action_id: 'name',
+            multiline: false
+          }
+        },
+        {
+          type: 'input',
+          block_id: 'employee.email',
+          label: {
+            type: 'plain_text',
+            text: 'Email'
+          },
+          element: {
+            type: 'plain_text_input',
+            action_id: 'email',
+            multiline: false
+          }
+        },
+        {
+          type: 'input',
+          block_id: 'employee.password',
+          label: {
+            type: 'plain_text',
+            text: 'Senha'
+          },
+          element: {
+            type: 'plain_text_input',
+            action_id: 'password',
+            multiline: false
+          }
+        }
+      ],
+      "submit": {
+        "type": 'plain_text',
+        "text": 'Cadastrar'
+      }
+    }
+  });
+});
+
+app.view('admin.employee.view.submit', async ({ ack, body, view, context }) => {
+  await ack();
+  console.log(body);
+  console.log('==========');
+  console.log(view);
+  console.log('==========');
+  console.log(context);
+  console.log('==========');
+  console.log(view['state']['values'])
+  // const name = view['state']['values']['employee.name']['name'].value;
+  // const email = view['state']['values']['employee.email']['email'].value;
+  // const password = view['state']['values']['employee.password']['password'].value;
+  // const category = view['state']['values']['employee.category']['category']['selected_option'].value;
+  // const user = body['user']['id'];
+    
+  // try {
+  //   const response = await createEmployee(name, email, category, password)
+    
+  //   messages.newEmployee(app, context.botToken, user, response.data);
+  // } catch (error) {
+  //   console.log(error);
+  // }
+});
+
+async function createEmployee(name, email, category, password) {
+  let payload = {
+    "employee": {
+      "name": name, 
+      "email": email, 
+      "category": category,
+      "password": password  
+    }
+  }
+  
+  return axios.post(process.env.ADMIN_API_URL + 'employees/', payload, adminHeader()) 
+}
+
+
+
 // save techops from workflow step
 app.step(new WorkflowStep('techops.request.workflow.created', {
   edit: async ({ ack, step, configure }) => {
